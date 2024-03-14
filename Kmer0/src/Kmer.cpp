@@ -14,22 +14,8 @@
  */
 
 //@throw = excepción
-/*
-* En las matrices, las filas no se pasan porque el compilador crea
-* un puntero para apuntar a las columnas de las matrices y reserva 
-* memoria ESTÁTICA para la matriz.
-* 
-* UNA VARIABLE NO VECTOR NO CONSTANTE, NO PUEDE SER PASADA A UNA FUNCIÓN QUE REQUIERA UNA VARIBLE CONSTANTE
-* Dos structs se pueden igualar porque apuntan a la misma dirección de memoria
-* Las funciones toLower y toUpper las declaramos porque usamos objetos 
-* de tipo Kmer. El compilador tiene esas funciones para char. 
-* "This" es un puntero que apunta al vector de kmers[0], formado por 
-* elementos de la clase kmer
-*/
-
-using namespace std;
-
 #include "Kmer.h"
+using namespace std;
 
 Kmer::Kmer(int k)
 {
