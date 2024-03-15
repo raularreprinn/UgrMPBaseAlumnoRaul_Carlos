@@ -5,10 +5,8 @@
 
 /* 
  * File:   main.cpp
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
  *
  * Created on 24 October 2023, 13:58
  */
@@ -63,18 +61,19 @@ int main(int argc, char* argv[]) {
     Kmer complementaryKmers[DIM_ARRAY_KMERS];
     
     // Read K (integer) and a string with the input nucleotides list
-    int k, nKmers=0, index=0;
+    int k, nKmers=0;
     string inputString;
     
     cin >> k;
     cin >> inputString;
+    
+    int tamaniostring=inputString.size();
     // Obtain the kmers: find the kmers in the input string and put them in an array of Kmers
-    for(int i=0; i<inputString.size(); i++)
+    for(int i=0; i<tamaniostring; i++)
     {
-        for(int j=index; j<k+index; j++)
-            kmers[index]=+inputString[j];
-        nKmers++;    
-        index++;
+        string kmerSequence = inputString.substr(i,k);
+        kmers[i] = Kmer(kmerSequence);
+        nKmers++;
     }
     
   
@@ -84,7 +83,7 @@ int main(int argc, char* argv[]) {
     // Obtain the complementary kmers and turn them into lowercase
     for(int i=0; i<nKmers; i++)
     {
-        complementaryKmers[i]=kmers[i].complementary(kmers[i].toString(),COMPLEMENTARY_NUCLEOTIDES);
+        complementaryKmers[i]=kmers[i].complementary(VALID_NUCLEOTIDES,COMPLEMENTARY_NUCLEOTIDES);
         ToLower(complementaryKmers[i]);
     }
     // Show the list of kmers and complementary kmers as in the example
