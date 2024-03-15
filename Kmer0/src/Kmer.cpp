@@ -122,16 +122,16 @@ bool IsValidNucleotide(char nucleotide, const string& validNucleotides){
     return validnuc;
 }
 
-void ToLower(Kmer& Kmer){
-    for (int i = 0; i < Kmer.size(); i++)
+void ToLower(Kmer& kmer){
+    for (int i = 0; i < kmer.size(); i++)
     {
-        tolower(Kmer.at(i));
+        kmer.at(i)=tolower(kmer.at(i));
     }
 }
 
-void ToUpper(Kmer& Kmer){
-    for (int i = 0; i < Kmer.size(); i++)
+void ToUpper(Kmer& kmer){
+    for (int i = 0; i < kmer.size(); i++)
     {
-        toupper(Kmer.at(i));
+        kmer.at(i)=toupper(kmer.at(i));
     }
 }

@@ -43,11 +43,11 @@ int main(int argc, char* argv[]) {
     // This string contains the list of nucleotides that are considered as
     // valid within a genetic sequence. The rest of characters are considered as
     // unknown nucleotides 
-    const string VALID_NUCLEOTIDES = "ACGT";
+    const string VALID_NUCLEOTIDES = "ACGTacgt";
     
     // This string contains the list of complementary nucleotides for each
     // nucleotide in validNucleotides
-    const string COMPLEMENTARY_NUCLEOTIDES = "TGCA";
+    const string COMPLEMENTARY_NUCLEOTIDES = "TGCAtgca";
 
     // This is a constant with the dimension of the array kmers
     const int DIM_ARRAY_KMERS = 100;
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     
     int tamaniostring=inputString.size();
     // Obtain the kmers: find the kmers in the input string and put them in an array of Kmers
-    for(int i=0; i<tamaniostring; i++)
+    for(int i=0; i<tamaniostring-1; i++)
     {
         string kmerSequence = inputString.substr(i,k);
         kmers[i] = Kmer(kmerSequence);
@@ -79,7 +79,9 @@ int main(int argc, char* argv[]) {
   
     // Normalize each Kmer in the array
     for(int i=0; i<nKmers; i++)
+    {
         kmers[i].normalize(VALID_NUCLEOTIDES);
+    }
     // Obtain the complementary kmers and turn them into lowercase
     for(int i=0; i<nKmers; i++)
     {
