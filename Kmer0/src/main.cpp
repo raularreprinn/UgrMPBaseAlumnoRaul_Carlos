@@ -43,11 +43,11 @@ int main(int argc, char* argv[]) {
     // This string contains the list of nucleotides that are considered as
     // valid within a genetic sequence. The rest of characters are considered as
     // unknown nucleotides 
-    const string VALID_NUCLEOTIDES = "ACGTacgt";
+    const string VALID_NUCLEOTIDES = "ACGT";
     
     // This string contains the list of complementary nucleotides for each
     // nucleotide in validNucleotides
-    const string COMPLEMENTARY_NUCLEOTIDES = "TGCAtgca";
+    const string COMPLEMENTARY_NUCLEOTIDES = "TGCA";
 
     // This is a constant with the dimension of the array kmers
     const int DIM_ARRAY_KMERS = 100;
