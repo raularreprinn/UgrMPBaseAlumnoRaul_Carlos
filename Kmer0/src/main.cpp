@@ -63,20 +63,36 @@ int main(int argc, char* argv[]) {
     Kmer complementaryKmers[DIM_ARRAY_KMERS];
     
     // Read K (integer) and a string with the input nucleotides list
-    int k, nKmers, index;
+    int k, nKmers=0, index=0;
     string inputString;
-
+    
+    cin >> k;
+    cin >> inputString;
     // Obtain the kmers: find the kmers in the input string and put them in an array of Kmers
-    cin>>k;
+    for(int i=0; i<inputString.size(); i++)
+    {
+        for(int j=index; j<k+index; j++)
+            kmers[index]=+inputString[j];
+        nKmers++;    
+        index++;
+    }
+    
+  
     // Normalize each Kmer in the array
-    for(int i=0; i<index; i++)
+    for(int i=0; i<nKmers; i++)
         kmers[i].normalize(VALID_NUCLEOTIDES);
     // Obtain the complementary kmers and turn them into lowercase
-    for(int i=0; i<index; i++)
-        complementaryKmers[i].complementary(kmers[i].this->_text,COMPLEMENTARY_NUCLEOTIDES);
-    for(int i=0; i<index; i++)
-        complementaryKmers[i].ToLower();
+    for(int i=0; i<nKmers; i++)
+    {
+        complementaryKmers[i]=kmers[i].complementary(kmers[i].toString(),COMPLEMENTARY_NUCLEOTIDES);
+        ToLower(complementaryKmers[i]);
+    }
     // Show the list of kmers and complementary kmers as in the example
+    cout << nKmers << endl;
+    for(int i = 0; i< nKmers; i++)
+    {
+        cout << kmers[i].toString() << "<-->" << complementaryKmers[i].toString() << endl;
+    }
     
     return 0;
 }
