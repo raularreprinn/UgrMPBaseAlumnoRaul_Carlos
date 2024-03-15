@@ -4,7 +4,7 @@
  */
 
 /* 
- * @file main.cpp
+ * File:   main.cpp
  * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
  * @author Andrés Cano Utrera <acu@decsai.ugr.es>
  * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
@@ -17,6 +17,7 @@
 #include <string>
 
 #include "Kmer.h"
+
 
 using namespace std;
 
@@ -62,13 +63,19 @@ int main(int argc, char* argv[]) {
     Kmer complementaryKmers[DIM_ARRAY_KMERS];
     
     // Read K (integer) and a string with the input nucleotides list
+    int k, nKmers, index;
+    string inputString;
 
     // Obtain the kmers: find the kmers in the input string and put them in an array of Kmers
-    
+    cin>>k;
     // Normalize each Kmer in the array
-
+    for(int i=0; i<index; i++)
+        kmers[i].normalize(VALID_NUCLEOTIDES);
     // Obtain the complementary kmers and turn them into lowercase
-
+    for(int i=0; i<index; i++)
+        complementaryKmers[i].complementary(kmers[i].this->_text,COMPLEMENTARY_NUCLEOTIDES);
+    for(int i=0; i<index; i++)
+        complementaryKmers[i].ToLower();
     // Show the list of kmers and complementary kmers as in the example
     
     return 0;

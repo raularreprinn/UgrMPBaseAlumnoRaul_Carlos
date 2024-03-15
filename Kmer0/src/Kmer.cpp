@@ -112,17 +112,17 @@ Kmer Kmer::complementary(const string& nucleotides, const string& complementaryN
 }
 
 bool IsValidNucleotide(char nucleotide, const string& validNucleotides){
-    bool valid = false;
+    bool validnuc = false;
 
     for (int i = 0; i < validNucleotides.size(); i++)
     {
         if (nucleotide == validNucleotides[i])
         {
-            valid = true;
+            validnuc = true;
         }
     }
 
-    return valid;
+    return validnuc;
 }
 
 void ToLower(Kmer& Kmer){
