@@ -97,13 +97,24 @@ Kmer Kmer::complementary(const string& nucleotides, const string& complementaryN
     
     for (int i = 0; i < this->_text.size(); i++){
         size_t pos = nucleotides.find(this->_text[i]);
-        if (pos!=string::npos){
-            throw out_of_range("Fuera de rango");
+        if (pos==string::npos ){
+            if(i!=0)
+            {
+                aux._text.push_back(MISSING_NUCLEOTIDE);
+            }else
+            {
+                aux._text[i]=MISSING_NUCLEOTIDE;
+            }
         }
         else{
-            aux._text[i] = complementaryNucleotides[pos];
+            if(i!=0)
+            {
+                aux._text.push_back(complementaryNucleotides[pos]);
+            }else
+            {
+                 aux._text[i]=complementaryNucleotides[pos];
+            }
         }
-        
     }
     
     return aux;

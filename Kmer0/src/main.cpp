@@ -69,11 +69,15 @@ int main(int argc, char* argv[]) {
     
     int tamaniostring=inputString.size();
     // Obtain the kmers: find the kmers in the input string and put them in an array of Kmers
-    for(int i=0; i<tamaniostring-1; i++)
+    for(int i=0; i<tamaniostring && i<DIM_ARRAY_KMERS; i++)
     {
-        string kmerSequence = inputString.substr(i,k);
-        kmers[i] = Kmer(kmerSequence);
-        nKmers++;
+        if(tamaniostring-i>=k)
+        {
+            string kmerSequence = inputString.substr(i,k);
+            kmers[i] = Kmer(kmerSequence);
+            nKmers++;
+            ToUpper(kmers[i]);
+        }
     }
     
   
@@ -97,4 +101,3 @@ int main(int argc, char* argv[]) {
     
     return 0;
 }
-
