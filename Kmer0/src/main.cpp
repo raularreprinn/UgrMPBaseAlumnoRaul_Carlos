@@ -9,6 +9,7 @@
  * @author Carlos Romero García <cromgar939@correo.ugr.es>
  *
  * Created on 24 October 2023, 13:58
+ * Finished on 16 March 2024
  */
 
 #include <iostream>
@@ -77,8 +78,7 @@ int main(int argc, char* argv[]) {
             kmers[i] = Kmer(kmerSequence);
             nKmers++;
         }
-        if(i+1==DIM_ARRAY_KMERS)
-            cout << "Numero de kmers limitado a 100" << endl;
+            // Si el número de kameros supera la dimensión el bucle se corta.
     }
     
   

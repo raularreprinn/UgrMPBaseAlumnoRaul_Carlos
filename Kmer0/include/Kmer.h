@@ -8,6 +8,7 @@
  * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
  * @author Carlos Romero García <cromgar939@correo.ugr.es>
  * Created on 24 October 2023, 14:00
+ * Finished on 16 March 2024
  */
 
 #ifndef KMER_H
