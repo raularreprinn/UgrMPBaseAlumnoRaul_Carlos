@@ -75,10 +75,11 @@ void Kmer::normalize(const string& validNucleotides){
     for (int i = 0; i < this->_text.size(); i++)
     {
         char& nuc = _text[i];
+        nuc=toupper(nuc);
     
         if (IsValidNucleotide(nuc, validNucleotides))
         {
-            this->_text[i] = toupper(nuc);
+            this->_text[i] = nuc;
         }
         else
         {

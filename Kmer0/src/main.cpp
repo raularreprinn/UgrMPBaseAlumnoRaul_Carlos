@@ -76,8 +76,9 @@ int main(int argc, char* argv[]) {
             string kmerSequence = inputString.substr(i,k);
             kmers[i] = Kmer(kmerSequence);
             nKmers++;
-            ToUpper(kmers[i]);
         }
+        if(i+1==DIM_ARRAY_KMERS)
+            cout << "Numero de kmers limitado a 100" << endl;
     }
     
   
