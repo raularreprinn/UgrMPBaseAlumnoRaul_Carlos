@@ -26,7 +26,7 @@
  * @param nElements The number of elements used by the array. Note that this
  * integer could be modified in this function. Output parameter
 */
-void ReadArrayKmerFreq(KmerFreq array[], int dim, int nElements);
+void ReadArrayKmerFreq(KmerFreq array[], const int dim, int &nElements);
 
 /**
  * @brief Prints in the standard output the number of used elements and the 
@@ -34,7 +34,7 @@ void ReadArrayKmerFreq(KmerFreq array[], int dim, int nElements);
  * @param array The array of KmerFreq to be printed. Input parameter
  * @param nElements The number of elements used by the array. Input parameter
 */
-void PrintArrayKmerFreq(KmerFreq array[], int nElements);
+void PrintArrayKmerFreq(KmerFreq array[], const int nElements);
 
 /**
  * @brief Swaps the elements at positions @p first and @p second in the given
@@ -46,8 +46,8 @@ void PrintArrayKmerFreq(KmerFreq array[], int nElements);
  * @throw Throws a std::out_of_range exception if first or second are positions 
  * out of the range of the given array
 */
-void SwapElementsArrayKmerFreq(KmerFreq array[], int nElements, int first,
-                int second);
+void SwapElementsArrayKmerFreq(KmerFreq array[], const int nElements, const int first,
+                const int second);
 
 /**
  * @brief Searchs the given Kmer in the subarray of @p array that begins at 
@@ -60,8 +60,8 @@ void SwapElementsArrayKmerFreq(KmerFreq array[], int nElements, int first,
  * that begins at position @p initialPos and ends at position @p finalPos 
  * (both included). If the given Kmer is not found, then -1 is returned.
  */
-int FindKmerInArrayKmerFreq(KmerFreq array[], Kmer kmer,
-        int initialPos, int finalPos);
+int FindKmerInArrayKmerFreq(KmerFreq array[], const Kmer kmer,
+       const int initialPos, const int finalPos);
 
 /**
  * @brief Sorts the given array of KmerFreq in decreasing order of
@@ -71,7 +71,7 @@ int FindKmerInArrayKmerFreq(KmerFreq array[], Kmer kmer,
  * @param array An array of KmerFreq. Input/output parameter
  * @param nElements The number of elements used by the array. Input parameter
 */
-void SortArrayKmerFreq(KmerFreq array[], int nElements);
+void SortArrayKmerFreq(KmerFreq array[], const int nElements);
 
 
 /**
@@ -109,7 +109,7 @@ _G 5
  * that should be considered as valid. Input parameter
 */
 void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, 
-        std::string validNucleotides);
+        const std::string validNucleotides);
 
 /**
  * @brief Deletes the KmerFreq object from the argument array that is at 
@@ -121,7 +121,7 @@ void NormalizeArrayKmerFreq(KmerFreq array[], int nElements,
  * @throw std::out_of_range Throws an std::out_of_range exception if @p pos 
  * is not in the range from 0 to nElements-1 (both included).
  */
-void DeletePosArrayKmerFreq(KmerFreq array[], int nElements, int pos);
+void DeletePosArrayKmerFreq(KmerFreq array[], int &nElements, int pos);
 
 /**
  * @brief Deletes the KmerFreq objects from the argument array which verifies
@@ -143,8 +143,7 @@ void DeletePosArrayKmerFreq(KmerFreq array[], int nElements, int pos);
  * frequency less or equals to this value, are deleted. This parameter has zero
  * as default value. Input parameter
  */
-void ZipArrayKmerFreq(KmerFreq array[], int nElements, 
-        bool deleteMissing=false, int lowerBound=0);
+void ZipArrayKmerFreq(KmerFreq array[], int nElements);
 
 #endif /* ARRAYKMERFREQFUNCTIONS_H */
 

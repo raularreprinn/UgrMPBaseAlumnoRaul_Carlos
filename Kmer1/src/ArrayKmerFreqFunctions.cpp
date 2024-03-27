@@ -26,9 +26,9 @@ void ReadArrayKmerFreq(KmerFreq array[], const int dim, int &nElements)
     {
         for(int i=0; i<nElements;i++)
         {
-            Kmer aux;
             string secuencia;
-            aux=Kmer(secuencia);
+            cin >> secuencia;
+            Kmer aux(secuencia);
             array[i].setKmer(aux);
             int frecuencia;
             cin>>frecuencia;
@@ -83,7 +83,7 @@ void SortArrayKmerFreq(KmerFreq array[], const int nElements)
     }
 }
 
-void NormalizeArrayKmerFreq(KmerFreq array[], const int nElements, const string validNucleotides)
+void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, const string validNucleotides)
 {
     for(int i=0; i<nElements; i++)
     {
@@ -100,7 +100,7 @@ void NormalizeArrayKmerFreq(KmerFreq array[], const int nElements, const string 
     }
 }
 
-void ZipArrayKmerFreq(KmerFreq array[], const int nElements)
+void ZipArrayKmerFreq(KmerFreq array[], int nElements)
 {
     bool deleteMissing=false;
     const int lowerBound=0;
