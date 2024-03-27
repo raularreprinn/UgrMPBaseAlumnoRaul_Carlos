@@ -5,12 +5,10 @@
 
 /* 
  * @file main.cpp
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
  *
- * Created on 27 October 2023, 12:00
+ * Created on 27 March 2023, 10:47
  */
 
 #include <iostream>
@@ -58,16 +56,28 @@ int main(int argc, char* argv[]) {
 
     // Read an integer n (number of pairs to read)
     
+    cin >> nKmers;
+    
     // Read the n pairs kmers-frequency from the standard input and put them 
     //      in the array kmers
     
+    ReadArrayKmerFreq(kmers, DIM_ARRAY_KMERS, nKmers);
+    
     // Normalizes each kmer in the array kmers
+    
+    NormalizeArrayKmerFreq(kmers, nKmers, VALID_NUCLEOTIDES);
     
     // Zip the kmers in the array kmers
     
+    ZipArrayKmerFreq(kmers, nKmers);
+    
     // Sort the array kmers
     
+    SortArrayKmerFreq(kmers, nKmers);
+    
     // Print the array kmers in the standard output
+    
+    PrintArrayKmerFreq(kmers, nKmers);
 
     return 0;
 }

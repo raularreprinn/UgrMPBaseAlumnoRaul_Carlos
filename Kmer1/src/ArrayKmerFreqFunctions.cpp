@@ -16,7 +16,7 @@
 using namespace std;
 
 
-void ReadArrayKmerFreq(KmerFreq array[], const int dim, int nElements)
+void ReadArrayKmerFreq(KmerFreq array[], const int dim, int &nElements)
 {
     if(nElements>dim)
     {
@@ -26,7 +26,13 @@ void ReadArrayKmerFreq(KmerFreq array[], const int dim, int nElements)
     {
         for(int i=0; i<nElements;i++)
         {
-            
+            Kmer aux;
+            string secuencia;
+            aux=Kmer(secuencia);
+            array[i].setKmer(aux);
+            int frecuencia;
+            cin>>frecuencia;
+            array[i].setFrequency(frecuencia);
         }
     }
 }
@@ -85,13 +91,11 @@ void NormalizeArrayKmerFreq(KmerFreq array[], const int nElements, const string 
     }
     for(int i=0; i<nElements; i++)
     {
-        for(int j=i+1; j<nElements; j++)
+        int posicion=FindKmerInArrayKmerFreq(array, array[i].getKmer(), i, nElements-1);
+        if(posicion!=-1)
         {
-            if(array[i].getKmer().toString()==array[j].getKmer().toString())
-            {
-                array[i].setFrequency(array[i].getFrequency()+array[j].getFrequency());
-                DeletePosArrayKmerFreq(array, nElements, j);
-            }
+            array[i].setFrequency(array[i].getFrequency()+array[posicion].getFrequency());
+            DeletePosArrayKmerFreq(array, nElements, posicion);
         }
     }
 }

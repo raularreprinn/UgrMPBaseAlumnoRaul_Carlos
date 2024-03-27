@@ -99,5 +99,28 @@
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
+    <conf name="NewConfiguration" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+      </compileType>
+      <item path="include/ArrayKmerFreqFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Kmer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/KmerFreq.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ArrayKmerFreqFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Kmer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/KmerFreq.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
   </confs>
 </configurationDescriptor>
