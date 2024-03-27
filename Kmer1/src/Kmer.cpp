@@ -56,6 +56,22 @@ string Kmer::toString () const{
     return this->_text;
 }
 
+void Kmer::toLower()
+{
+    for(int i=0; i< this->_text.size(); i++)
+    {
+        _text[i]=tolower(_text[i]);
+    }
+}
+
+void Kmer::toUpper()
+{
+    for(int i=0; i< this->_text.size(); i++)
+    {
+        _text[i]=toupper(_text[i]);
+    }
+}
+
 const char& Kmer::at(int index) const{
     if (index > this->_text.size() - 1)
     {

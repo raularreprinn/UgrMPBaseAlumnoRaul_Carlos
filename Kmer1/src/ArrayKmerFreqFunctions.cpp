@@ -39,13 +39,17 @@ void ReadArrayKmerFreq(KmerFreq array[], const int dim, int &nElements)
 
 void PrintArrayKmerFreq(KmerFreq array[], const int nElements)
 {
-    for(int i=0; i<nElements; i++)
+    if(nElements>0)
     {
-        cout << array[i].toString()<<endl;
+        cout << nElements << endl;
+        for(int i=0; i<nElements; i++)
+        {
+            cout << array[i].toString()<<endl;
+        }
     }
 }
 
-void SwapElementsArrayKmerFreq(KmerFreq array[], const int nElements, const int first, const int second)
+void SwapElementsArrayKmerFreq(KmerFreq array[], const int &nElements, const int first, const int second)
 {
     if(first<0 || first>nElements || second<0 || second>nElements)
     {
@@ -69,7 +73,7 @@ int FindKmerInArrayKmerFreq(KmerFreq array[], const Kmer kmer, const int initial
     return posicion;
 }
 
-void SortArrayKmerFreq(KmerFreq array[], const int nElements)
+void SortArrayKmerFreq(KmerFreq array[], const int &nElements)
 {
     for(int i=0; i<nElements-1; i++)
     {
@@ -83,15 +87,17 @@ void SortArrayKmerFreq(KmerFreq array[], const int nElements)
     }
 }
 
-void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, const string validNucleotides)
+void NormalizeArrayKmerFreq(KmerFreq array[], int &nElements, const string validNucleotides)
 {
     for(int i=0; i<nElements; i++)
     {
-        array[i].getKmer().normalize(validNucleotides);
+        Kmer aux=array[i].getKmer();
+        aux.normalize(validNucleotides);
+        array[i].setKmer(aux);
     }
     for(int i=0; i<nElements; i++)
     {
-        int posicion=FindKmerInArrayKmerFreq(array, array[i].getKmer(), i, nElements-1);
+        int posicion=FindKmerInArrayKmerFreq(array, array[i].getKmer(), i+1, nElements-1);
         if(posicion!=-1)
         {
             array[i].setFrequency(array[i].getFrequency()+array[posicion].getFrequency());
@@ -100,7 +106,7 @@ void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, const string validN
     }
 }
 
-void ZipArrayKmerFreq(KmerFreq array[], int nElements)
+void ZipArrayKmerFreq(KmerFreq array[], int &nElements)
 {
     bool deleteMissing=false;
     const int lowerBound=0;

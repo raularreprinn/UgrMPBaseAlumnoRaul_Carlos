@@ -45,6 +45,6 @@ string KmerFreq:: toString()
     string aux;
     aux=this->_kmer.toString();
     aux+=" ";
-    aux+=this->_frequency;
+    aux+=to_string(this->_frequency);
     return aux;
 }
