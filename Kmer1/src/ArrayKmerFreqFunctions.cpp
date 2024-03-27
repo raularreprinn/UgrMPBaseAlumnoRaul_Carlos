@@ -5,10 +5,8 @@
 
 /** 
  * @file ArrayKmerFreqFunctions.cpp
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
+ *@author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
  * 
  * Created on 25 Marzo 2024, 17:00
  */
@@ -18,7 +16,7 @@
 using namespace std;
 
 
-void ReadArrayKmerFreq(KmerFreq array[], int dim, int nElements)
+void ReadArrayKmerFreq(KmerFreq array[], const int dim, int nElements)
 {
     if(nElements>dim)
     {
@@ -28,11 +26,12 @@ void ReadArrayKmerFreq(KmerFreq array[], int dim, int nElements)
     {
         for(int i=0; i<nElements;i++)
         {
-            //Ni puta idea
+            
         }
     }
 }
-void PrintArrayKmerFreq(KmerFreq array[], int nElements)
+
+void PrintArrayKmerFreq(KmerFreq array[], const int nElements)
 {
     for(int i=0; i<nElements; i++)
     {
@@ -40,7 +39,7 @@ void PrintArrayKmerFreq(KmerFreq array[], int nElements)
     }
 }
 
-void SwapElementsArrayKmerFreq(KmerFreq array[], int nElements, int first, int second)
+void SwapElementsArrayKmerFreq(KmerFreq array[], const int nElements, const int first, const int second)
 {
     if(first<0 || first>nElements || second<0 || second>nElements)
     {
@@ -53,7 +52,7 @@ void SwapElementsArrayKmerFreq(KmerFreq array[], int nElements, int first, int s
     }
 }
 
-int FindKmerInArrayKmerFreq(KmerFreq array[], Kmer kmer, int initialPos, int finalPos)
+int FindKmerInArrayKmerFreq(KmerFreq array[], const Kmer kmer, const int initialPos, const int finalPos)
 {
     int posicion=-1;
     for(int i=initialPos; i<=finalPos; i++)
@@ -64,24 +63,21 @@ int FindKmerInArrayKmerFreq(KmerFreq array[], Kmer kmer, int initialPos, int fin
     return posicion;
 }
 
-void SortArrayKmerFreq(KmerFreq array[], int nElements)
+void SortArrayKmerFreq(KmerFreq array[], const int nElements)
 {
     for(int i=0; i<nElements-1; i++)
     {
         int posicion=i;
-        KmerFreq aux;
         for(int j=i+1; j<nElements; j++)
         {
             if(array[posicion].getFrequency()<array[j].getFrequency())
                 posicion=j;
         }
-        aux=array[i];
-        array[i]=array[posicion];
-        array[posicion]=aux;
+        SwapElementsArrayKmerFreq(array, nElements, i, posicion);
     }
 }
 
-void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, string validNucleotides)
+void NormalizeArrayKmerFreq(KmerFreq array[], const int nElements, const string validNucleotides)
 {
     for(int i=0; i<nElements; i++)
     {
@@ -100,10 +96,10 @@ void NormalizeArrayKmerFreq(KmerFreq array[], int nElements, string validNucleot
     }
 }
 
-void ZipArrayKmerFreq(KmerFreq array[], int nElements, bool deleteMissing, int lowerBound)
+void ZipArrayKmerFreq(KmerFreq array[], const int nElements)
 {
-    deleteMissing=false;
-    lowerBound=0;
+    bool deleteMissing=false;
+    const int lowerBound=0;
     for(int i=0; i<nElements; i++)
     {
         for(int j=0; j<array[i].getKmer().size(); j++)
