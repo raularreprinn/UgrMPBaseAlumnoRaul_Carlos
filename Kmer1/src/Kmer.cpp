@@ -7,8 +7,7 @@
  * @file Kmer.cpp
  * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
  * @author Carlos Romero García <cromgar939@correo.ugr.es>
- * Created on 24 October 2023, 14:00
- * Finished on 16 March 2024
+ * Created on 1 March 2024, 19:00
  */
 
 //@throw = excepción

@@ -8,7 +8,7 @@
  * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
  * @author Carlos Romero García <cromgar939@correo.ugr.es>
  * 
- * Created on 25 de marzo de 2024, 14:18
+ * Created on 25 de March de 2024, 14:18
  */
 
 #include "KmerFreq.h"

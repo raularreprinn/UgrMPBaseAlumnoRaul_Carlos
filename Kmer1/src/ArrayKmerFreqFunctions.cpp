@@ -6,9 +6,9 @@
 /** 
  * @file ArrayKmerFreqFunctions.cpp
  *@author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
- * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ *@author Carlos Romero García <cromgar939@correo.ugr.es>
  * 
- * Created on 25 Marzo 2024, 17:00
+ * Created on 25 March 2024, 17:00
  */
 
 
