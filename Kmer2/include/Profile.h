@@ -5,12 +5,9 @@
 
 /** 
  * @file Profile.h
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
- * 
- * Created on 29 January 2023, 11:00
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ * Created on 7 April 2024, 10:00
  */
 
 #ifndef PROFILE_H
@@ -18,6 +15,7 @@
 
 
 #include <iostream>
+#include <stdio.h>
 #include "KmerFreq.h"
 
 /**
@@ -73,7 +71,7 @@ public:
      * given index is not valid
      * @return A const reference to the KmerFreq at the given position
      */
-    KmerFreq at(int index); 
+    const KmerFreq at(int index) const; 
 
     /**
      * @brief Gets a reference to the KmerFreq at the given position of the 
@@ -157,7 +155,7 @@ public:
      * if the given file cannot be opened or if an error occurs while writing
      * to the file
      */
-    void save(char fileName[]) 
+    void save(char fileName[]) ;
 
     /**
      * @brief Loads into this object the Profile object stored in the given 
@@ -259,7 +257,7 @@ _G 5
      * deleted. This parameter has zero as default value.
      * Input parameter
      */
-    void zip(bool deleteMissing=false, int lowerBound = 0);
+    void zip();
     
     /**
      * @brief Appends to this Profile object, the list of pairs  
