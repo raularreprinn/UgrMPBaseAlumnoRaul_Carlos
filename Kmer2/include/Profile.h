@@ -44,7 +44,7 @@ public:
      * @param size The size for the vector of kmers in this Profile. 
      * Input parameter
      */
-    Profile(int size);
+    Profile(const int size);
 
 
     /**
@@ -59,7 +59,7 @@ public:
      * Modifier method
      * @param id The new identifier. Input parameter
      */
-    void setProfileId(std::string id);
+    void setProfileId(const std::string id);
 
 
     /**
@@ -71,7 +71,7 @@ public:
      * given index is not valid
      * @return A const reference to the KmerFreq at the given position
      */
-    const KmerFreq at(int index) const; 
+    const KmerFreq at(const int index) const; 
 
     /**
      * @brief Gets a reference to the KmerFreq at the given position of the 
@@ -82,7 +82,7 @@ public:
      * given index is not valid
      * @return A reference to the KmerFreq at the given position
      */
-    KmerFreq at(int index); 
+    KmerFreq at(const int index); 
 
     /**
      * @brief Gets the number of KmerFreq objects.
@@ -111,7 +111,7 @@ public:
      * @return If found, it returns the position where the kmer 
      * was found. If not, it returns -1
      */
-    int findKmer(Kmer kmer, int initialPos, int finalPos);
+    int findKmer(Kmer kmer, const int initialPos, const int finalPos);
     
     /**
      * @brief Searchs the given kmer in the list of kmers in this
@@ -155,7 +155,7 @@ public:
      * if the given file cannot be opened or if an error occurs while writing
      * to the file
      */
-    void save(char fileName[]) ;
+    void save(const char fileName[]) ;
 
     /**
      * @brief Loads into this object the Profile object stored in the given 
@@ -174,7 +174,7 @@ public:
      * @throw throw std::invalid_argument Throws a std::invalid_argument if
      * an invalid magic string is found in the given file
      */
-    void load(char fileName[]);
+    void load(const char fileName[]);
      
     /**
      * @brief Appends a copy of the given KmerFreq to this Profile object.
@@ -226,7 +226,7 @@ _G 5
      * @param validNucleotides a string with the list of characters (nucleotides) 
      * that should be considered as valid. Input parameter
      */
-    void normalize(std::string validNucleotides);
+    void normalize(const std::string validNucleotides);
 
     /**
      * @brief Deletes the KmerFreq object from the vector of KmerFreq in this
@@ -237,7 +237,7 @@ _G 5
      * @throw std::out_of_range Throws an std::out_of_range exception if @p pos 
      * is not in the range from 0 to size()-1 (both included).
      */
-    void deletePos(int pos);
+    void deletePos(const int pos);
 
     /**
      * @brief Deletes the KmerFreq objects from the vector of KmerFreq in this
@@ -257,7 +257,7 @@ _G 5
      * deleted. This parameter has zero as default value.
      * Input parameter
      */
-    void zip();
+    void zip(bool deleteMissing=false, const int lowerBound=0);
     
     /**
      * @brief Appends to this Profile object, the list of pairs  
@@ -268,7 +268,7 @@ _G 5
      * Modifier method
      * @param profile A Profile object. Input parameter
      */
-    void join(Profile profile);
+    void join(Profile &profile);
     
 private:
     static const int DIM_VECTOR_KMER_FREQ = 2000; ///< The capacity of the array _vectorKmerFreq

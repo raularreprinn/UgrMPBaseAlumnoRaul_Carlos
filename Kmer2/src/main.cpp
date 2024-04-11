@@ -82,16 +82,32 @@ int main(int argc, char* argv[]) {
 
     // Check if the number of running arguments is correct, otherwise call to
     // showEnglishHelp(cerr) and end main()
-
+    if(argc<3)
+    {
+        showEnglishHelp(cerr);
+    }
+    
     // Load and normalize the first input Profile file
-
+    Profile perfil;
+    perfil.load(argv[2]);
+    perfil.normalize(VALID_NUCLEOTIDES);
+    
     // Use a loop to load, normalize and obtain the join with the rest of Profiles
-
+    for(int i=3; i<argc; i++)
+    {
+        Profile aux;
+        aux.load(argv[i]);
+        aux.normalize(VALID_NUCLEOTIDES);
+        perfil.join(aux);
+    }
+    
     // Zip the resulting Profile
-
+    perfil.zip();
+    
     // Sort the zipped Profile
-
+    perfil.sort();
+    
     // Save the final Profile to the output file
-
+    perfil.save(argv[1]);
     return 0;
 }

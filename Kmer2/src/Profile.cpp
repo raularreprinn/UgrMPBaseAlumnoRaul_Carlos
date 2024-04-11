@@ -23,7 +23,7 @@ Profile::Profile()
     _size=0;
 }
 
-Profile::Profile(int size)
+Profile::Profile(const int size)
 {
     if(size<0 || size > DIM_VECTOR_KMER_FREQ)
     {
@@ -45,12 +45,12 @@ string Profile::getProfileId()
     return _profileId;
 }
 
-void Profile::setProfileId(string id)
+void Profile::setProfileId(const string id)
 {
     _profileId = id;
 }
 
-const KmerFreq Profile::at(int index) const
+const KmerFreq Profile::at(const int index) const
 {
     if(index<0 || index>DIM_VECTOR_KMER_FREQ)
     {
@@ -62,7 +62,7 @@ const KmerFreq Profile::at(int index) const
     }
 }
 
-KmerFreq Profile::at(int index)
+KmerFreq Profile::at(const int index)
 {
     if(index<0 || index>DIM_VECTOR_KMER_FREQ)
     {
@@ -84,7 +84,7 @@ int Profile::getCapacity()
     return DIM_VECTOR_KMER_FREQ;
 }
 
-int Profile::findKmer(Kmer kmer, int initialPos, int finalPos)
+int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)
 {
     int posicion=-1;
     for(int i=initialPos; i<=finalPos; i++)
@@ -140,7 +140,7 @@ void Profile::sort()
     }
 }
 
-void Profile::save(char fileName[])
+void Profile::save(const char fileName[])
 {
     FILE *pFile;
     pFile=fopen(fileName,"w");
@@ -159,9 +159,43 @@ void Profile::save(char fileName[])
     }
 }
 
-void Profile::load(char fileName[])
+void Profile::load(const char fileName[])
 {
-    
+    FILE *pFile;
+    pFile=fopen(fileName,"r");
+    if(pFile==NULL)
+    {
+        throw std::ios_base::failure("No se pudo abrir");
+    }else
+    {
+        string magnum;
+        fscanf(pFile,"%s",magnum);
+        if(magnum!=MAGIC_STRING_T)
+        {
+            throw std::ios_base::failure("No coinciden los números mágicos");
+        }else
+        {
+            int tam;
+            fscanf(pFile,"%d",tam);
+            if(tam<0 || tam+_size==DIM_VECTOR_KMER_FREQ)
+            {
+                throw out_of_range ("Fuera de rango");
+            }else
+            {
+                string kmer;
+                int freq;
+                while (fscanf(pFile, "%s %d", kmer, freq) != EOF)
+                {
+                    fscanf(pFile, "%s %d", kmer, freq);
+                    KmerFreq aux;
+                    aux.setFrequency(freq);
+                    aux.setKmer(kmer);
+                    append(aux);
+                }
+            }
+        }
+        fclose(pFile);
+    }
 }
 
 void Profile::append(KmerFreq kmerFreq)
@@ -186,7 +220,7 @@ void Profile::append(KmerFreq kmerFreq)
   }
 }
 
-void Profile::normalize(string validNucleotides)
+void Profile::normalize(const string validNucleotides)
 {
     for(int i=0; i<_size; i++)
     {
@@ -205,7 +239,7 @@ void Profile::normalize(string validNucleotides)
     }
 }
 
-void Profile::deletePos(int pos)
+void Profile::deletePos(const int pos)
 {
     if(pos<0 || pos>_size)
     {
@@ -220,10 +254,8 @@ void Profile::deletePos(int pos)
     _size--;
 }
 
-void Profile::zip()
+void Profile::zip(bool deleteMissing, const int lowerBound)
 {
-  bool deleteMissing=false;
-    const int lowerBound=0;
     for(int i=0; i<_size; i++)
     {
         for(int j=0; j<_vectorKmerFreq[i].getKmer().size(); j++)
@@ -246,7 +278,7 @@ void Profile::zip()
     }  
 }
 
-void Profile::join(Profile profile)
+void Profile::join(Profile &profile)
 {
     for(int i=0; i<profile.getSize(); i++)
     {
