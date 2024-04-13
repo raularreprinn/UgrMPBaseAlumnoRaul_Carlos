@@ -19,8 +19,8 @@ const string Profile::MAGIC_STRING_T="MP-KMER-T-1.0";
 
 Profile::Profile()
 {
-    _profileId = "unknown";
-    _size=0;
+    this->_profileId = "unknown";
+    this->_size=0;
 }
 
 Profile::Profile(const int size)
@@ -31,23 +31,23 @@ Profile::Profile(const int size)
     }
     else
     {
-        _profileId = "unknown";
+        this->_profileId = "unknown";
          for(int i=0; i<size; i++)
     {
-        _vectorKmerFreq[i].setKmer(Kmer::MISSING_NUCLEOTIDE);
-        _vectorKmerFreq[i].setFrequency(0);
+        this->_vectorKmerFreq[i].setKmer(Kmer::MISSING_NUCLEOTIDE);
+        this->_vectorKmerFreq[i].setFrequency(0);
     } 
     }
 }
 
 string Profile::getProfileId()
 {
-    return _profileId;
+    return this->_profileId;
 }
 
 void Profile::setProfileId(const string id)
 {
-    _profileId = id;
+    this->_profileId = id;
 }
 
 const KmerFreq Profile::at(const int index) const
@@ -70,13 +70,13 @@ KmerFreq Profile::at(const int index)
     }
     else
     {
-        return _vectorKmerFreq[index];
+        return this->_vectorKmerFreq[index];
     }
 }
 
 int Profile::getSize()
 {
-    return _size;
+    return this->_size;
 }
 
 int Profile::getCapacity()
@@ -87,9 +87,9 @@ int Profile::getCapacity()
 int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)
 {
     int posicion=-1;
-    for(int i=initialPos; i<=finalPos; i++)
+    for(int i=initialPos; i<finalPos; i++)
     {
-        if(_vectorKmerFreq[i].getKmer().toString()==kmer.toString())
+        if(this->_vectorKmerFreq[i].getKmer().toString()==kmer.toString())
             posicion=i;
     }
     return posicion;
@@ -98,9 +98,9 @@ int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)
 int Profile::findKmer(Kmer kmer)
 {
     int posicion=-1;
-    for(int i=0; i<_size; i++)
+    for(int i=0; i<this->_size; i++)
     {
-        if(_vectorKmerFreq[i].getKmer().toString()==kmer.toString())
+        if(this->_vectorKmerFreq[i].getKmer().toString()==kmer.toString())
             posicion=i;
     }
     return posicion;
@@ -109,92 +109,98 @@ int Profile::findKmer(Kmer kmer)
 string Profile::toString()
 {
     string aux;
-    aux = _profileId+"\n"+to_string(_size)+"\n";
-    for(int i=0; i<_size; i++)
+    aux = this->_profileId+"\n"+to_string(this->_size)+"\n";
+    for(int i=0; i<this->_size; i++)
     {
-        aux += _vectorKmerFreq[i].toString()+"\n";
+        aux += this->_vectorKmerFreq[i].toString()+"\n";
     }
     return aux;
 }
 
 void Profile::sort()
 {
-    for(int i=0; i<_size-1; i++)
+    for(int i=0; i<this->_size-1; i++)
     {
         int posicion=i;
         for(int j=i+1; j<_size; j++)
         {
-            if(_vectorKmerFreq[posicion].getFrequency()<_vectorKmerFreq[j].getFrequency())
+            if(this->_vectorKmerFreq[posicion].getFrequency()<this->_vectorKmerFreq[j].getFrequency())
                 posicion=j;
-            else if(_vectorKmerFreq[posicion].getFrequency()==_vectorKmerFreq[j].getFrequency())
+            else if(this->_vectorKmerFreq[posicion].getFrequency()==this->_vectorKmerFreq[j].getFrequency())
             {
-                if(_vectorKmerFreq[posicion].getKmer().toString()<_vectorKmerFreq[j].getKmer().toString())
+                if(this->_vectorKmerFreq[posicion].getKmer().toString()>this->_vectorKmerFreq[j].getKmer().toString())
                 {
                     posicion = j;
                 }
             }
         }
-        KmerFreq aux=_vectorKmerFreq[posicion];
-        _vectorKmerFreq[posicion]=_vectorKmerFreq[i];
-        _vectorKmerFreq[i]=aux;
+        KmerFreq aux=this->_vectorKmerFreq[posicion];
+        this->_vectorKmerFreq[posicion]=_vectorKmerFreq[i];
+        this->_vectorKmerFreq[i]=aux;
     }
 }
 
 void Profile::save(const char fileName[])
 {
-    FILE *pFile;
-    pFile=fopen(fileName,"w");
-    if(pFile==NULL)
+    ofstream outstream(fileName,ios::out);
+    if(outstream)
     {
-        throw std::ios_base::failure("No se pudo abrir");
+        outstream<<MAGIC_STRING_T<<endl;
+        outstream<<this->_profileId<<endl;
+        outstream<<to_string(this->_size)<<endl;
+        for(int i=0; i<this->_size; i++)
+        {
+            outstream<<this->_vectorKmerFreq[i].getKmer().toString()<<" ";
+            outstream<<to_string(this->_vectorKmerFreq[i].getFrequency())<<endl;
+        }
+        outstream.close();
     }else
     {
-        fprintf(pFile,"%s\n",Profile::MAGIC_STRING_T);
-        fprintf(pFile,"%d\n",_size);
-        for(int i=0; i<_size; i++)
-        {
-            fprintf(pFile,"%s %d\n",_vectorKmerFreq[i].getKmer(),_vectorKmerFreq[i].getFrequency());
-        }
-        fclose(pFile);
+        throw std::ios_base::failure("No se pudo abrir");
     }
 }
 
 void Profile::load(const char fileName[])
 {
-    FILE *pFile;
-    pFile=fopen(fileName,"r");
-    if(pFile==NULL)
+    const char *archivo=fileName;
+    string num_mag;
+    string nkmers;
+    string kmer;
+    string freq;
+    ifstream InputStream;
+    
+    InputStream.open(archivo,ifstream::in);
+    if(InputStream)
     {
-        throw std::ios_base::failure("No se pudo abrir");
-    }else
-    {
-        string magnum;
-        fscanf(pFile,"%s",magnum);
-        if(magnum!=MAGIC_STRING_T)
+        InputStream>>num_mag;
+        InputStream.get();
+        if(num_mag==MAGIC_STRING_T)
         {
-            throw std::ios_base::failure("No coinciden los números mágicos");
-        }else
-        {
-            int tam;
-            fscanf(pFile,"%d",tam);
-            if(tam<0 || tam+_size==DIM_VECTOR_KMER_FREQ)
+            getline(InputStream,this->_profileId);
+            getline(InputStream,nkmers);
+            if(stoi(nkmers)>0 || stoi(nkmers)<DIM_VECTOR_KMER_FREQ)
             {
-                throw out_of_range ("Fuera de rango");
+                for(int i=0; i<stoi(nkmers);i++)
+                {
+                    InputStream>>kmer;
+                    InputStream>>freq;
+                    InputStream.get();
+                    this->_vectorKmerFreq[i].setKmer(kmer);
+                    this->_vectorKmerFreq[i].setFrequency(stoi(freq));
+                    this->_size++;
+                }
             }else
             {
-                string kmer;
-                int freq;
-                while (fscanf(pFile, "%s %d", kmer, freq) != EOF)
-                {
-                    fscanf(pFile, "%s %d", kmer, freq);
-                    KmerFreq aux;
-                    aux.setFrequency(freq);
-                    aux.setKmer(kmer);
-                    append(aux);
-                }
+                throw std::out_of_range("Número de kmeros inválido");
             }
+        }else
+        {
+            throw std::invalid_argument("Números mágicos diferentes");
         }
-        fclose(pFile);
+        InputStream.close();
+    }else
+    {
+        throw std::ios_base::failure("No se pudo abrir");
     }
 }
 
@@ -207,33 +213,33 @@ void Profile::append(KmerFreq kmerFreq)
      }
     else
      {
-    if(_size == DIM_VECTOR_KMER_FREQ)
+    if(this->_size == DIM_VECTOR_KMER_FREQ)
      {
         throw out_of_range ("Vector lleno");
      }
     else
      {
-         _vectorKmerFreq[_size].setKmer(kmerFreq.getKmer());
-         _vectorKmerFreq[_size].setFrequency(kmerFreq.getFrequency());
-         _size++;
+         this->_vectorKmerFreq[_size].setKmer(kmerFreq.getKmer());
+         this->_vectorKmerFreq[_size].setFrequency(kmerFreq.getFrequency());
+         this->_size++;
      }  
   }
 }
 
 void Profile::normalize(const string validNucleotides)
 {
-    for(int i=0; i<_size; i++)
+    for(int i=0; i<this->_size; i++)
     {
-        Kmer aux=_vectorKmerFreq[i].getKmer();
+        Kmer aux=this->_vectorKmerFreq[i].getKmer();
         aux.normalize(validNucleotides);
-        _vectorKmerFreq[i].setKmer(aux);
+        this->_vectorKmerFreq[i].setKmer(aux);
     }
-    for(int i=0; i<_size; i++)
+    for(int i=0; i<this->_size; i++)
     {
-        int posicion=findKmer(_vectorKmerFreq[i].getKmer(), i+1, _size-1);
+        int posicion=findKmer(this->_vectorKmerFreq[i].getKmer(), i+1, this->_size);
         if(posicion!=-1)
         {
-            _vectorKmerFreq[i].setFrequency(_vectorKmerFreq[i].getFrequency()+_vectorKmerFreq[posicion].getFrequency());
+            this->_vectorKmerFreq[i].setFrequency(this->_vectorKmerFreq[i].getFrequency()+this->_vectorKmerFreq[posicion].getFrequency());
             deletePos(posicion);
         }
     }
@@ -241,28 +247,29 @@ void Profile::normalize(const string validNucleotides)
 
 void Profile::deletePos(const int pos)
 {
-    if(pos<0 || pos>_size)
+    if(pos<0 || pos>this->_size)
     {
         throw out_of_range("Fuera de rango");
     }else
     {
-        for(int i=pos; i<_size-1; i++)
+        for(int i=pos; i<this->_size-1; i++)
         {
-            _vectorKmerFreq[i]=_vectorKmerFreq[i+1];
+            this->_vectorKmerFreq[i]=this->_vectorKmerFreq[i+1];
         }
     }
-    _size--;
+    this->_size--;
 }
 
 void Profile::zip(bool deleteMissing, const int lowerBound)
 {
-    for(int i=0; i<_size; i++)
+    for(int i=0; i<this->_size; i++)
     {
-        for(int j=0; j<_vectorKmerFreq[i].getKmer().size(); j++)
+        for(int j=0; j<this->_vectorKmerFreq[i].getKmer().size(); j++)
         {
-            if(_vectorKmerFreq[i].getKmer().at(j)==Kmer::MISSING_NUCLEOTIDE)
+            deleteMissing=true;
+            if(_vectorKmerFreq[i].getKmer().at(j)!=Kmer::MISSING_NUCLEOTIDE)
             {
-                deleteMissing=true;
+                deleteMissing=false;
             }   
         }
         if(_vectorKmerFreq[i].getFrequency()<=lowerBound)

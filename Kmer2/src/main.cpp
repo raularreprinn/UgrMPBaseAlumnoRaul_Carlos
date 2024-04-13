@@ -5,12 +5,9 @@
 
 /**
  * @file main.cpp
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
- *
- * Created on 31 October de 2023, 14:30
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ * Created on 7 April 2024, 10:00
  */
 
 #include <iostream>
@@ -85,6 +82,7 @@ int main(int argc, char* argv[]) {
     if(argc<3)
     {
         showEnglishHelp(cerr);
+        return 1;
     }
     
     // Load and normalize the first input Profile file
