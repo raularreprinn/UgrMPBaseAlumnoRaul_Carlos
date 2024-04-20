@@ -264,13 +264,17 @@ void Profile::zip(bool deleteMissing, const int lowerBound)
 {
     for(int i=0; i<this->_size; i++)
     {
+        int contador=0;
         for(int j=0; j<this->_vectorKmerFreq[i].getKmer().size(); j++)
         {
-            deleteMissing=true;
-            if(_vectorKmerFreq[i].getKmer().at(j)!=Kmer::MISSING_NUCLEOTIDE)
+            if(_vectorKmerFreq[i].getKmer().at(j)==Kmer::MISSING_NUCLEOTIDE)
             {
-                deleteMissing=false;
-            }   
+                contador++;
+            }
+        }
+        if(contador==this->_vectorKmerFreq[i].getKmer().size())
+        {
+            deleteMissing=true;
         }
         if(_vectorKmerFreq[i].getFrequency()<=lowerBound)
         {
@@ -287,8 +291,11 @@ void Profile::zip(bool deleteMissing, const int lowerBound)
 
 void Profile::join(Profile &profile)
 {
-    for(int i=0; i<profile.getSize(); i++)
+    if(profile.getProfileId()==this->_profileId)
     {
-        append(profile.at(i));
+        for(int i=0; i<profile.getSize(); i++)
+        {
+            append(profile.at(i));
+        }
     }
 }
