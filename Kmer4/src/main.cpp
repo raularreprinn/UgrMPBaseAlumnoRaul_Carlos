@@ -25,9 +25,9 @@ using namespace std;
  * cout, cerr, etc) 
  */
 void showEnglishHelp(ostream& outputStream) {
-    outputStream << "ERROR in Kmer3 parameters" << endl;
+    outputStream << "ERROR in Kmer4 parameters" << endl;
     outputStream << "Run with the following parameters:" << endl;
-    outputStream << "kmer3 [-t min|max] <file1.prf> <file2.prf> [ ... <filen.prf>]" << endl;
+    outputStream << "kmer4 [-t min|max] <file1.prf> <file2.prf> [ ... <filen.prf>]" << endl;
     outputStream << endl;
     outputStream << "Parameters:" << endl;
     outputStream << "-t min | -t max: search for minimun distances or maximum distances (-t min by default)" << endl;
@@ -149,7 +149,8 @@ int main(int argc, char* argv[]) {
                 posicion=i;
             }
         }
-        cout <<  "Nearest profile file: " << argv[ini+posicion+1]<< endl<< "Identifier of the nearest profile: " << perfiles[posicion].getProfileId()<<endl;
+        cout <<  "Nearest profile file: " << argv[ini+posicion+1]<< endl;
+        cout << "Identifier of the nearest profile: " << perfiles[posicion].getProfileId()<<endl;
     }else
     {
         for(int i=1; i<argc-ini-1;i++)
@@ -159,7 +160,8 @@ int main(int argc, char* argv[]) {
                 posicion=i;
             }
         }
-        cout <<  "Farthest profile file: " << argv[ini+posicion+1]<< endl<< "Identifier of the farthest profile: " << perfiles[posicion].getProfileId()<<endl;
+        cout <<  "Farthest profile file: " << argv[ini+posicion+1]<< endl;
+        cout << "Identifier of the farthest profile: " << perfiles[posicion].getProfileId()<<endl;
     }
 
     // Deallocate the dynamic array of Profile

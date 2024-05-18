@@ -4,13 +4,10 @@
  */
 
 /** 
- * @file Profile.h
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
- * 
- * Created on 17 November 2023, 10:15
+ * @file Profile.cpp
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ * Created on 8 May 2024, 19:00
  */
 
 #ifndef PROFILE_H
@@ -338,9 +335,9 @@ private:
     static const int BLOCK_SIZE=20; ///< Size of new blocks in the dynamic array _vectorKmerFreq 
 
     static const std::string MAGIC_STRING_T; ///< A const string with the magic string for text files
-    void allocate(const int memoria);
+    void allocate();
     void deallocate();
-    void reallocate(const int memoria);
+    void reallocate();
     void copy(const Profile &p);
 };
 

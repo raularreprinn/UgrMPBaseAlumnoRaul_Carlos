@@ -20,7 +20,7 @@ Profile::Profile()
 {
     this->_profileId = "unknown";
     this->_size=0;
-    this->_vectorKmerFreq=new KmerFreq[INITIAL_CAPACITY];
+    allocate();
     this->_capacity=INITIAL_CAPACITY;
 }
 
@@ -34,13 +34,11 @@ Profile::Profile(const int size)
     {
         this->_profileId = "unknown";
         this->_size=size;
-        this->_vectorKmerFreq=new KmerFreq[size];
-        this->_capacity=size;
-        for(int i=0; i<size; i++)
-    {
-        this->_vectorKmerFreq[i].setKmer(Kmer::MISSING_NUCLEOTIDE);
-        this->_vectorKmerFreq[i].setFrequency(0);
-    } 
+        allocate();
+        while(_size>_capacity)
+        {
+            reallocate();
+        }
     }
 }
 
@@ -51,8 +49,7 @@ Profile::Profile(const Profile &orig)
 
 Profile::~Profile()
 {
-    delete [] _vectorKmerFreq;
-    _vectorKmerFreq = NULL;
+    deallocate();
 }
 
 void Profile:: operator=(const Profile &orig)
@@ -76,7 +73,7 @@ void Profile::setProfileId(const string id)
 
 const KmerFreq Profile::at(const int index) const
 {
-    if(index<0 || index>_capacity)
+    if(index<0 || index>_size)
     {
         throw out_of_range ("Fuera de rango");
     }
@@ -88,7 +85,7 @@ const KmerFreq Profile::at(const int index) const
 
 KmerFreq Profile::at(const int index)
 {
-    if(index<0 || index>_capacity)
+    if(index<0 || index>_size)
     {
         throw out_of_range ("Fuera de rango");
     }
@@ -113,7 +110,7 @@ double Profile::getDistance(Profile otherProfile)
     int posicion;
     double suma=0.0;
     
-    for(int i=0; i<getSize(); i++)
+    for(int i=0; i<_size; i++)
     {
         posicion=otherProfile.findKmer(at(i).getKmer());
         if(posicion==-1)
@@ -224,15 +221,16 @@ void Profile::load(const char fileName[])
             getline(InputStream,nkmers);
             if(stoi(nkmers)>0)
             {
-                allocate(stoi(nkmers));
                 for(int i=0; i<stoi(nkmers);i++)
                 {
+                    if(_capacity==_size)
+                        reallocate();
                     InputStream>>kmer;
                     InputStream>>freq;
                     InputStream.get();
                     this->_vectorKmerFreq[i].setKmer(kmer);
                     this->_vectorKmerFreq[i].setFrequency(stoi(freq));
-                    this->_size++;
+                    _size++;
                 }
             }else
             {
@@ -258,12 +256,12 @@ void Profile::append(KmerFreq kmerFreq)
      }
     else
      {
-    if(this->_size == _capacity)
+    if(_size == _capacity)
      {
-        reallocate(_capacity+1);
+        reallocate();
         this->_vectorKmerFreq[_size].setKmer(kmerFreq.getKmer());
         this->_vectorKmerFreq[_size].setFrequency(kmerFreq.getFrequency());
-        this->_size++;
+        _size++;
      }
   }
 }
@@ -342,47 +340,33 @@ void Profile::join(Profile &profile)
     }
 }
 
-void Profile::allocate(const int memoria)
+void Profile::allocate()
 {
-    while(_capacity<memoria)
-    {
-        deallocate();
-        _capacity+=BLOCK_SIZE;
-        _vectorKmerFreq = new KmerFreq[_capacity];
-    }
+    _vectorKmerFreq = new KmerFreq[INITIAL_CAPACITY];
 }
 
 void Profile::deallocate()
 {
     delete []_vectorKmerFreq;
+    _vectorKmerFreq = NULL;
     _capacity=0;
     _size=0;
 }
 
-void Profile::reallocate(const int memoria)
+void Profile::reallocate()
 {
-    Profile aux(*this);
-    allocate(memoria);
-    
-    if(memoria>=aux._capacity)
+    KmerFreq * aux = new KmerFreq[_capacity+BLOCK_SIZE];
+    int tam = _size;
+    int cap = _capacity+BLOCK_SIZE;
+    for(int i=0; i<_size; i++)
     {
-         _size = aux._size;
-    
-        for(int i=0; i<_size; i++)
-            {
-                _vectorKmerFreq[i].setKmer(aux.at(i).getKmer());
-                _vectorKmerFreq[i].setFrequency(aux.at(i).getFrequency());
-            }  
-    }else
-    {
-        _size = _capacity;
-    
-        for(int i=0; i<_size; i++)
-            {
-                _vectorKmerFreq[i].setKmer(aux.at(i).getKmer());
-                _vectorKmerFreq[i].setFrequency(aux.at(i).getFrequency());
-            }     
+        aux[i]=_vectorKmerFreq[i];
     }
+    deallocate();
+    _vectorKmerFreq = aux;
+    _capacity = cap;
+    _size = tam;
+    aux = 0;
 }
 
 void Profile::copy(const Profile &p)
@@ -390,7 +374,7 @@ void Profile::copy(const Profile &p)
     _capacity = p._capacity;
     _size = p._size;
     _profileId = p._profileId;
-    allocate(_capacity);
+    _vectorKmerFreq = new KmerFreq[_capacity];
     
     for(int i=0; i<_size; i++)
         {

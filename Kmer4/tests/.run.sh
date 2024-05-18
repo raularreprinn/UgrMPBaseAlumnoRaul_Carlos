@@ -1,4 +1,4 @@
 touch tests//.timeout
-CMD="valgrind --leak-check=full /home/gte/acu/Latex/Docencia/MP/MP_2023_2024/Github/MP2324/NetBeans/Kmer4Teacher/dist/Debug/GNU-Linux/kmer4teacher  ../Genomes/human1_k4_k5.prf ../Genomes/chimpanzee_chr6_s1_l500000_k4_k5.prf ../Genomes/human_chr6_s60000_l500000_k4_k5.prf 1> tests//.out10 2>&1"
+CMD="valgrind --leak-check=full /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer4/dist/Debug/GNU-Linux/kmer4  ../Genomes/human1_k1.prf ../Genomes/human1.prf ../Genomes/human2.prf 1> tests//.out11 2>&1"
 eval $CMD
 rm tests//.timeout
