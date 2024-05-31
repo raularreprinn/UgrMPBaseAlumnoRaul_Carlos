@@ -69,7 +69,8 @@ istream & operator>>(std::istream &is, KmerFreq &kmerFreq)
 {
     Kmer kmer;
     int frecuencia;
-    is >> kmer >> frecuencia;
+    kmer.read(is);
+    is >> frecuencia;
     kmerFreq.setFrequency(frecuencia);
     kmerFreq.setKmer(kmer);
     return is;

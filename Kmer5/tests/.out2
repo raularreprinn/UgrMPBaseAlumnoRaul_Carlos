@@ -1,8 +1,8 @@
-==22022== Memcheck, a memory error detector
-==22022== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==22022== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==22022== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/LEARN/GNU-Linux/LEARN -p human -o tests/output/human1.prf
-==22022== 
+==36541== Memcheck, a memory error detector
+==36541== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==36541== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==36541== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/LEARN/GNU-Linux/LEARN -p human -o tests/output/human1.prf
+==36541== 
 ERROR in LEARN parameters
 Run with the following parameters:
 LEARN [-t|-b] [-k kValue] [-n nucleotidesSet] [-p profileId] [-o outputFilename] <file1.dna> [<file2.dna> <file3.dna> .... ]
@@ -17,12 +17,12 @@ Parameters:
 
 This program learns a profile model from a set of input DNA files <file1.dna> <file2.dna> <file3.dna> ....
 
-==22022== 
-==22022== HEAP SUMMARY:
-==22022==     in use at exit: 0 bytes in 0 blocks
-==22022==   total heap usage: 67 allocs, 67 frees, 326,684 bytes allocated
-==22022== 
-==22022== All heap blocks were freed -- no leaks are possible
-==22022== 
-==22022== For lists of detected and suppressed errors, rerun with: -s
-==22022== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==36541== 
+==36541== HEAP SUMMARY:
+==36541==     in use at exit: 0 bytes in 0 blocks
+==36541==   total heap usage: 67 allocs, 67 frees, 326,684 bytes allocated
+==36541== 
+==36541== All heap blocks were freed -- no leaks are possible
+==36541== 
+==36541== For lists of detected and suppressed errors, rerun with: -s
+==36541== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

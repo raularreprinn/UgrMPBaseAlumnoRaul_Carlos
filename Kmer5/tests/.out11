@@ -1,8 +1,8 @@
-==22460== Memcheck, a memory error detector
-==22460== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==22460== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==22460== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/LEARN/GNU-Linux/LEARN -k 3 -p bug -o tests/output/unknownACGU_k3.prf ../Genomes/unknownACGU.rna
-==22460== 
+==36979== Memcheck, a memory error detector
+==36979== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==36979== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==36979== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/LEARN/GNU-Linux/LEARN -k 3 -p bug -o tests/output/unknownACGU_k3.prf ../Genomes/unknownACGU.rna
+==36979== 
 ERROR in LEARN parameters
 Run with the following parameters:
 LEARN [-t|-b] [-k kValue] [-n nucleotidesSet] [-p profileId] [-o outputFilename] <file1.dna> [<file2.dna> <file3.dna> .... ]
@@ -17,12 +17,12 @@ Parameters:
 
 This program learns a profile model from a set of input DNA files <file1.dna> <file2.dna> <file3.dna> ....
 
-==22460== 
-==22460== HEAP SUMMARY:
-==22460==     in use at exit: 0 bytes in 0 blocks
-==22460==   total heap usage: 67 allocs, 67 frees, 326,684 bytes allocated
-==22460== 
-==22460== All heap blocks were freed -- no leaks are possible
-==22460== 
-==22460== For lists of detected and suppressed errors, rerun with: -s
-==22460== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==36979== 
+==36979== HEAP SUMMARY:
+==36979==     in use at exit: 0 bytes in 0 blocks
+==36979==   total heap usage: 67 allocs, 67 frees, 326,684 bytes allocated
+==36979== 
+==36979== All heap blocks were freed -- no leaks are possible
+==36979== 
+==36979== For lists of detected and suppressed errors, rerun with: -s
+==36979== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

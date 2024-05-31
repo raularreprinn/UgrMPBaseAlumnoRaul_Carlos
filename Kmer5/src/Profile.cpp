@@ -179,14 +179,7 @@ void Profile::save(const char fileName[], const char mode)
     ofstream outstream(fileName,ios::out);
     if(outstream)
     {
-        outstream<<MAGIC_STRING_T<<endl;
-        outstream<<this->_profileId<<endl;
-        outstream<<to_string(this->_size)<<endl;
-        for(int i=0; i<this->_size; i++)
-        {
-            outstream<<this->_vectorKmerFreq[i].getKmer().toString()<<" ";
-            outstream<<to_string(this->_vectorKmerFreq[i].getFrequency())<<endl;
-        }
+        outstream<<*this;
         outstream.close();
     }else
     {
@@ -211,24 +204,7 @@ void Profile::load(const char fileName[])
         if(num_mag==MAGIC_STRING_T)
         {
             getline(InputStream,this->_profileId);
-            getline(InputStream,nkmers);
-            if(stoi(nkmers)>0)
-            {
-                for(int i=0; i<stoi(nkmers);i++)
-                {
-                    if(_capacity==_size)
-                        reallocate();
-                    InputStream>>kmer;
-                    InputStream>>freq;
-                    InputStream.get();
-                    this->_vectorKmerFreq[i].setKmer(kmer);
-                    this->_vectorKmerFreq[i].setFrequency(stoi(freq));
-                    _size++;
-                }
-            }else
-            {
-                throw std::out_of_range("Número de kmeros inválido");
-            }
+            InputStream >> *this;
         }else
         {
             throw std::invalid_argument("Números mágicos diferentes");
@@ -244,23 +220,21 @@ void Profile::append(const KmerFreq &kmerFreq)
 {
     int aux = findKmer(kmerFreq.getKmer());
     if(aux != -1)
-     {
-         _vectorKmerFreq[aux].setFrequency(_vectorKmerFreq[aux].getFrequency()+kmerFreq.getFrequency());
-     }
+    {
+        _vectorKmerFreq[aux].setFrequency(_vectorKmerFreq[aux].getFrequency()+kmerFreq.getFrequency());
+    }
     else
-     {
-    if(_size == _capacity)
-     {
-        Profile aux(*this);
-        reallocate();
-        copy(aux);
-        aux.reallocate();
+    {
+        if(_size == _capacity)
+        {
+            reallocate();
+        }
         this->_vectorKmerFreq[_size].setKmer(kmerFreq.getKmer());
         this->_vectorKmerFreq[_size].setFrequency(kmerFreq.getFrequency());
         _size++;
-     }
-  }
+    }
 }
+
 
 void Profile::normalize(const string validNucleotides)
 {
@@ -381,10 +355,10 @@ void Profile::reallocate()
         aux[i]=_vectorKmerFreq[i];
     }
     deallocate();
-    _vectorKmerFreq = aux;
-    _capacity = cap;
-    _size = tam;
-    aux = 0;
+    _size=tam;
+    _capacity=cap;
+    _vectorKmerFreq=aux;
+    aux = NULL;
 }
 
 void Profile::copy(const Profile &p)
@@ -412,11 +386,22 @@ ostream & operator<<(std::ostream &os, const Profile &profile)
 
 istream & operator>>(std::istream &is, Profile &profile)
 {
-    string freq;
-    Kmer kmer;
-    is >> kmer >> freq;
-    KmerFreq aux;
-    aux.setKmer(kmer);
-    profile.append(aux);
+    string nkmers;
+    getline(is, nkmers);
+            if(stoi(nkmers)>0)
+            {
+                for(int i=0; i<stoi(nkmers);i++)
+                {
+                    string freq;
+                    Kmer kmer;
+                    is >> kmer >> freq;
+                    KmerFreq aux;
+                    aux.setKmer(kmer);
+                    profile.append(aux);
+                }
+            }else
+            {
+                throw std::out_of_range("Número de kmeros inválido");
+            }
     return is;
 }

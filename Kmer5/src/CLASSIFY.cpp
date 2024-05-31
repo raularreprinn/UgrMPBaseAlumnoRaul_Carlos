@@ -98,17 +98,20 @@ int main(int argc, char *argv[]) {
     for(int i=1; i<argc||ini==i; i++)
     {
         string aux= argv[i];
-        if(aux=='-k')
+        if(aux=="-k")
         {
-            k=*argv[i+1];
+            k=stoi(argv[i+1]);
             i++;
-        }else if(aux=='-n')
+        }else if(aux=="-n")
         {
             nucleotides=*argv[i+1];
             i++;
-        }else if(aux.substr(aux.find_last_of(".")+1)=="dna")
+        }else if(aux.size()>3)
         {
-            ini=i;
+            if(aux.substr(aux.size()-3,3)=="dna"||aux.substr(aux.size()-3,3)=="rna")
+            {
+                ini=i;
+            }           
         }else
         {
             showEnglishHelp(cerr);
@@ -125,11 +128,14 @@ int main(int argc, char *argv[]) {
     if(ini<argc)
     {
         string prf=argv[ini+1];
-        if(prf.substr(prf.find_last_of(".")+1)!="prf")
+        if(prf.size()<3)
         {
-            showEnglishHelp(cerr);
-            return 1;
-        }
+            if(prf.substr(prf.size()-3,3)!="prf")
+            {
+                showEnglishHelp(cerr);
+                return 1;
+            }
+        }       
     }else
     {
         showEnglishHelp(cerr);
