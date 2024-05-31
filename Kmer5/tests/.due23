@@ -1,0 +1,5 @@
+%%%OUTPUT
+Distance to ../Genomes/human_chr6_s60000_l500000_k2.prf (homo sapiens): 0.257812
+Distance to ../Genomes/drosophila_chr2L_k2.prf (drosophila melanogaster): 0.34375
+
+Final decision: homo sapiens with a distance of 0.257812

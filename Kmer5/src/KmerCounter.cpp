@@ -29,12 +29,13 @@ KmerCounter::KmerCounter(int k, std::string validNucleotides)
 {
     _k=k;
     _validNucleotides=validNucleotides;
-    _allNucleotides= DEFAULT_VALID_NUCLEOTIDES + _validNucleotides + Kmer::MISSING_NUCLEOTIDE;
+    _allNucleotides=_validNucleotides + Kmer::MISSING_NUCLEOTIDE;
     _frequency= new int*[getNumRows()];
     for(int i=0; i<getNumRows(); i++)
     {
         _frequency[i]=new int[getNumCols()];
     }
+    initFrequencies();
 }
 
 KmerCounter::KmerCounter(const KmerCounter &orig)
@@ -127,9 +128,29 @@ std::string KmerCounter::toString()const{
     return outputString;
 }
 
- void KmerCounter::increaseFrequency(Kmer kmer, int frequency)
+ void KmerCounter::increaseFrequency(const Kmer &kmer, int frequency)
  {
+     int contador=0;
+     for(int i=0; i<kmer.getK(); i++)
+     {
+         for(int j=0; j<_allNucleotides.size(); j++)
+         {
+             if(kmer[i]==_allNucleotides[j])
+             {
+                 contador++;
+             }
+         }
+     }
+     if(contador!=kmer.getK()||kmer.getK()!=getK())
+     {
+         throw std::invalid_argument("Diferentes nucleótidos válidos o k");
+     }
      
+     int fila, columna;
+     getRowColumn(kmer, fila, columna);
+     
+     _frequency[fila][columna]+=frequency;
+
  }
  
  KmerCounter & KmerCounter:: operator=(const KmerCounter &orig)
@@ -163,11 +184,57 @@ std::string KmerCounter::toString()const{
             {
                 for(int j=0; j<getNumCols(); j++)
                     {
-                    _frequency[i][j]+=kc._frequency[i][j];
+                        _frequency[i][j]+=kc._frequency[i][j];
                     }  
             }
      }
      return *this;
+ }
+ 
+ void KmerCounter::calculateFrequencies(const char* fileName)
+ {
+     string cadena;
+     ifstream is;
+     
+     is.open(fileName,ifstream::in);
+     if(is)
+     {
+         getline(is,cadena);
+         for(int i=0; i<cadena.size();i=i+getK())
+         {
+             string aux;
+             for(int j=i; j<i+getK(); j++)
+             {
+                 aux+=cadena[j];
+             }
+             Kmer kmer(aux);
+             kmer.normalize(_allNucleotides);
+             increaseFrequency(kmer);
+         }
+         is.close();
+     }else
+     {
+         throw std::ios_base::failure("No se pudo abrir");
+     }
+ }
+ 
+ Profile KmerCounter:: toProfile()
+ {
+     Profile aux;
+     for(int i=0; i<getNumRows(); i++)
+     {
+         for(int j=0; j<getNumCols(); j++)
+         {
+             if(_frequency[i][j]>0)
+             {
+                 KmerFreq kmerfreq;
+                 kmerfreq.setKmer(getKmer(i,j));
+                 kmerfreq.setFrequency(_frequency[i][j]);
+                 aux+=kmerfreq;
+             }
+         }
+     }
+     return aux;
  }
 
 int KmerCounter::getIndex(const std::string& kmer) const{
@@ -192,6 +259,56 @@ string KmerCounter::getInvertedIndex(int index, int nCharacters) const {
         index = index / _allNucleotides.size();
     }
     return result;
+}
+
+void KmerCounter::getRowColumn(const Kmer &kmer, int &row, int &column)
+{
+    int contador=0;
+     for(int i=0; i<kmer.getK(); i++)
+     {
+         for(int j=0; j<_allNucleotides.size(); j++)
+         {
+             if(kmer[i]==_allNucleotides[j])
+             {
+                 contador++;
+             }
+         }
+     }
+     if(contador!=kmer.getK()||kmer.getK()!=getK())
+     {
+         row=-1;
+         column=-1;
+     }else
+     {
+         int m=getNumNucleotides();
+        int lfilas=(_k+1)/2;
+        int lcolumnas=_k-lfilas;
+        row=0;
+        column=0;
+        for(int i=0; i<lfilas; i++)
+        {
+            row+=pow(m,i)*kmer[lfilas-i-1];
+        }
+        for(int i=0; i<lcolumnas; i++)
+        {
+            column+=pow(m,i)*kmer[lcolumnas-i-1];
+        }
+     }
+}
+
+Kmer KmerCounter::getKmer(int row, int column)
+{
+    if(row<0 || row>getNumRows()||column<0||column>getNumCols())
+    {
+        throw std::invalid_argument("Número de filas o columnas no válido");
+    }
+    int lfilas=(_k+1)/2;
+    int lcolumnas=_k-lfilas;
+    string nucs;
+    nucs=getInvertedIndex(row,lfilas);
+    nucs.append(getInvertedIndex(column,lcolumnas));
+    Kmer kmer(nucs);
+    return kmer;
 }
 
 void KmerCounter::initFrequencies()

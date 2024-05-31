@@ -80,7 +80,7 @@ public:
      * Query method
      * @param outputStream An output stream where this object will be written
      */
-    void write(std::ostream outputStream);
+    void write(std::ostream &outputStream);
     
     /**
      * @brief Reads this object from the given input stream. It first reads
@@ -90,7 +90,7 @@ public:
      * Modifier method
      * @param inputStream An input stream from which this object will be read
      */
-    void read(std::istream inputStream);
+    void read(std::istream &inputStream);
     
 private:
     Kmer _kmer; ///< the Kmer object

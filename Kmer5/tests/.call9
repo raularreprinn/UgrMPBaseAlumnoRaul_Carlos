@@ -1,0 +1,1 @@
+Test #9 [tests//03.4learn_unknownACGU.rna.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -n ACGU -p bug -o tests/output/unknownACGU.prf ../Genomes/unknownACGU.rna

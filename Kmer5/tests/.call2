@@ -1,0 +1,1 @@
+Test #2 [tests//01.2learn_missingParameters2.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -p human -o tests/output/human1.prf

@@ -12,7 +12,13 @@
  * 
  * Created on 22 December 2023, 10:00
  */
+#include <iostream>
+#include <cstring>
+#include <fstream>
 
+#include "KmerCounter.h"
+
+using namespace std;
 
 /**
  * Shows help about the use of this program in the given output stream
@@ -70,15 +76,78 @@ TA 1
 int main(int argc, char *argv[]) {   
     // Process the main() arguments
     
+    if(argc<2)
+    {
+        showEnglishHelp(cerr);
+        return 1;
+    }
+    
+    int ini=0;
+    char modo='t';
+    int k=5;
+    string nucleotides=KmerCounter::DEFAULT_VALID_NUCLEOTIDES, id="unknown";
+    char *ArchivoSalida="output.prf";
+    
+    for(int i=1; i<argc||ini==i; i++)
+    {
+        string aux= argv[i];
+        if(aux=='-t' || aux=='-b')
+        {
+            modo=*argv[i];
+        }else if(aux=='-p')
+        {
+            id=argv[i+1];
+            i++;
+        }else if(aux=='-k')
+        {
+            k=*argv[i+1];
+            i++;
+        }else if(aux=='-n')
+        {
+            nucleotides=argv[i+1];
+            i++;
+        }else if(aux=='-o')
+        {
+            ArchivoSalida=argv[i+1];
+            i++;
+        }else if(aux.substr(aux.find_last_of(".")+1)=="dna")
+        {
+            ini=i;
+        }else
+        {
+            showEnglishHelp(cerr);
+            return 1;
+        }
+    }
+    
+     if(ini==0)
+    {
+        showEnglishHelp(cerr);
+        return 1;
+    }
     // Loop to calculate the kmer frecuencies of the input genome files using 
     // a KmerCounter object
-    
+    KmerCounter principal(k, nucleotides);
+    principal.calculateFrequencies(argv[ini]);
+    if(ini<argc)
+    {
+        for(int i=ini; i<argc; i++)
+        {
+            KmerCounter aux(k, nucleotides);
+            aux.calculateFrequencies(argv[i]);
+            principal+=aux;
+        }
+        
+    }
     // Obtain a Profile object from the KmerCounter object
-    
+    Profile perfil;
+    perfil=principal.toProfile();
+    perfil.setProfileId(id);
     // Zip the Profile object
-    
+    perfil.zip();
     // Sort the Profile object
-    
+    perfil.sort();
     // Save the Profile object in the output file
+    perfil.save(ArchivoSalida, modo);
 }
 

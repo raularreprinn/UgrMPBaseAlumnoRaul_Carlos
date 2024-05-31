@@ -1,0 +1,1 @@
+Test #25 [tests//12.1classify_covid.rna.test] valgrind --leak-check=full  ./dist/CLASSIFY/GNU-Linux/CLASSIFY  -n ACGU ../Genomes/covid.rna ../Genomes/covidFullGenomeRNA.prf ../Genomes/ebolaFullGenomeRNA.prf ../Genomes/monkeypoxFullGenomeRNA.prf 

@@ -1,0 +1,1 @@
+Test #23 [tests//11.2classify_human2_k2.test] valgrind --leak-check=full  ./dist/CLASSIFY/GNU-Linux/CLASSIFY  -k 2 ../Genomes/human1.dna ../Genomes/human_chr6_s60000_l500000_k2.prf ../Genomes/drosophila_chr2L_k2.prf

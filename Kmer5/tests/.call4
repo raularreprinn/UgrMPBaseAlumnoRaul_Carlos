@@ -1,0 +1,1 @@
+Test #4 [tests//02.2learn_invalidArguments2.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -K 1 -p human -o tests/output/human1.prf ../Genomes/human1.dna

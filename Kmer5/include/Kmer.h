@@ -145,7 +145,7 @@ public:
      * Query method
      * @param outputStream An output stream where this object will be written
      */
-    void write(std::ostream outputStream);
+    void write(std::ostream &outputStream);
     
     /**
      * @brief Reads this object from the given input stream. It reads characters
@@ -153,7 +153,7 @@ public:
      * Modifier method
      * @param inputSstream An input stream from which this object will be read
      */
-    void read(std::istream inputStream);
+    void read(std::istream &inputStream);
     
     const char & operator[] (int index)const;
     

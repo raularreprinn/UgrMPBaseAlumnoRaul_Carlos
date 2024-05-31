@@ -1,0 +1,1 @@
+Test #15 [tests//05.1learn_worm1.dna.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -p bug -o tests/output/worm1.prf ../Genomes/worm1.dna

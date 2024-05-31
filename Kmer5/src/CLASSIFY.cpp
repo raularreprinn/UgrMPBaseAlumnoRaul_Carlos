@@ -18,6 +18,15 @@
  * @param outputStream The output stream where the help will be shown (for example,
  * cout, cerr, etc) 
  */
+
+#include <iostream>
+#include <cstring>
+#include <fstream>
+
+#include "KmerCounter.h"
+
+using namespace std;
+
 void showEnglishHelp(ostream& outputStream) {
     outputStream << "ERROR in CLASSIFY parameters" << endl;
     outputStream << "Run with the following parameters:" << endl;
@@ -76,22 +85,99 @@ Final decision: homo sapiens with a distance of 0.0557804
  */
 int main(int argc, char *argv[]) {
     // Process the main() arguments
+    if(argc<3)
+    {
+        showEnglishHelp(cerr);
+        return 1;
+    }
+    
+    int ini=0;
+    int k=5;
+    string nucleotides=KmerCounter::DEFAULT_VALID_NUCLEOTIDES;
+    
+    for(int i=1; i<argc||ini==i; i++)
+    {
+        string aux= argv[i];
+        if(aux=='-k')
+        {
+            k=*argv[i+1];
+            i++;
+        }else if(aux=='-n')
+        {
+            nucleotides=*argv[i+1];
+            i++;
+        }else if(aux.substr(aux.find_last_of(".")+1)=="dna")
+        {
+            ini=i;
+        }else
+        {
+            showEnglishHelp(cerr);
+            return 1;
+        }
+    }
+    
+    if(ini==0)
+    {
+        showEnglishHelp(cerr);
+        return 1;
+    }
+    
+    if(ini<argc)
+    {
+        string prf=argv[ini+1];
+        if(prf.substr(prf.find_last_of(".")+1)!="prf")
+        {
+            showEnglishHelp(cerr);
+            return 1;
+        }
+    }else
+    {
+        showEnglishHelp(cerr);
+        return 1;
+    }
     
     // Calculate the kmer frecuencies of the input genome file using 
     //    a KmerCounter object
-    
-    // Obtain a Profile object for the input genome from the KmerCounter object
-    
-    // Zip the for the input genome Profile object
-    
-    // Sort the for the input genome Profile object
-    
+    KmerCounter principal(k, nucleotides);
+    principal.calculateFrequencies(argv[ini]);
+    // Obtain a Profile object from the KmerCounter object
+    Profile perfil;
+    perfil=principal.toProfile();
+    // Zip the Profile object
+    perfil.zip();
+    // Sort the Profile object
+    perfil.sort();
     // Use a loop to print the distance from the input genome to 
     //   each one of the provided profile models
+    Profile *perfiles= new Profile[argc-ini-1];
+    for(int i=0; i<argc-ini-1; i++)
+    {
+        perfiles[i].load(argv[ini+i+1]);
+    }
+    double *distancias= new double[argc-ini-1];
     
+    for(int i=0; i<argc-ini-1; i++)
+    {
+        distancias[i]=perfil.getDistance(perfiles[i]);
+        cout << "Distance to " << argv[ini+i+1] <<  ": " << distancias[i] << endl;
+    }
     // Print the identifier and distance to the closest profile
+    int posicion=0;
+    for(int i=1; i<argc-ini-1;i++)
+        {
+            if(distancias[posicion]>distancias[i])
+            {
+                posicion=i;
+            }
+        }
+    cout <<  "Nearest profile file: " << argv[ini+posicion+1]<< endl;
+    cout << "Identifier of the nearest profile: " << perfiles[posicion].getProfileId()<<endl;
     
+    delete []perfiles;
+    delete []distancias;
+    perfiles=NULL;
+    distancias=NULL;
     
- 
+    return 0;
 }
 

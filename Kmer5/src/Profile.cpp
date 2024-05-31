@@ -174,7 +174,7 @@ void Profile::sort()
     }
 }
 
-void Profile::save(const char fileName[])
+void Profile::save(const char fileName[], const char mode)
 {
     ofstream outstream(fileName,ios::out);
     if(outstream)
@@ -412,6 +412,11 @@ ostream & operator<<(std::ostream &os, const Profile &profile)
 
 istream & operator>>(std::istream &is, Profile &profile)
 {
-    is >
+    string freq;
+    Kmer kmer;
+    is >> kmer >> freq;
+    KmerFreq aux;
+    aux.setKmer(kmer);
+    profile.append(aux);
     return is;
 }

@@ -1,0 +1,1 @@
+Test #14 [tests//04.3learn_human1_k2.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -k 2 -p 'homo sapiens' -o tests/output/human1_k2.prf ../Genomes/human1.dna

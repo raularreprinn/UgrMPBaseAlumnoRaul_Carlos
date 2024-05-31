@@ -1,0 +1,1 @@
+Test #21 [tests//10.2classify_invalidArguments2.test] valgrind --leak-check=full  ./dist/CLASSIFY/GNU-Linux/CLASSIFY  -N ACGT ../Genomes/human1.dna ../Genomes/human2.prf ../Genomes/mouse1.prf

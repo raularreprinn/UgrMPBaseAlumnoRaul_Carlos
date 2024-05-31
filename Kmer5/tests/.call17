@@ -1,0 +1,1 @@
+Test #17 [tests//07.1learn_covidFullGenome.rna.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -n ACGU -p 'severe acute respiratory syndrome coronavirus 2' -o tests/output/covidFullGenomeRNA.prf ../Genomes/covidFullGenome.rna

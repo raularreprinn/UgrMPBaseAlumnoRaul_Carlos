@@ -1,0 +1,1 @@
+Test #22 [tests//11.1classify_unknownACGT.test] valgrind --leak-check=full  ./dist/CLASSIFY/GNU-Linux/CLASSIFY  ../Genomes/unknownACGT.dna ../Genomes/human_chr6_s60000_l500000.prf ../Genomes/drosophila_chr2L_s1_l500000.prf 

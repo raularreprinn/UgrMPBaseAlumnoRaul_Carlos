@@ -49,6 +49,16 @@ string KmerFreq:: toString() const
     return aux;
 }
 
+void KmerFreq::write(std::ostream &outputStream)
+{
+    outputStream << *this;
+}
+
+void KmerFreq::read(std::istream &inputStream)
+{
+    inputStream >> *this;
+}
+
 ostream & operator<<(std::ostream &os, const KmerFreq &kmerFreq)
 {
     os << kmerFreq.toString();
@@ -67,14 +77,13 @@ istream & operator>>(std::istream &is, KmerFreq &kmerFreq)
 
 bool operator>(const KmerFreq & kmerFreq1, const KmerFreq & kmerFreq2)
 {
+    bool mayor=false;
     if(kmerFreq1.getFrequency()>kmerFreq2.getFrequency())
-        return true;
+        mayor= true;
     else if(kmerFreq1.getFrequency()==kmerFreq2.getFrequency())
-    {
         if((kmerFreq1.getKmer()>kmerFreq2.getKmer())==false)
-            return true;
-    }else
-        return false;
+            mayor= true;
+    return mayor;
 }
 
 bool operator<(const KmerFreq & kmerFreq1, const KmerFreq & kmerFreq2)

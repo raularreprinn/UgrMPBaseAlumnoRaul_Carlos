@@ -147,7 +147,7 @@ public:
      * @param frequency The quantity that will be added to the current 
      * frequency. Input parameter
      */
-    void increaseFrequency(Kmer kmer, int frequency = 1);
+    void increaseFrequency(const Kmer &kmer, int frequency = 1);
 
     /**
      * @brief Overloading of the assignment operator.
@@ -185,7 +185,7 @@ public:
      * @throw std::ios_base::failure Throws a std::ios_base::failure if the
      * given file cannot be opened
      */
-    void calculateFrequencies(char* fileName);
+    void calculateFrequencies(const char* fileName);
 
     /**
      * @brief Builds a Profile object from this KmerCounter object. The 
@@ -276,7 +276,7 @@ private:
      * @param column The column in the frequency matrix corresponding to 
      * Kmer @p kmer. Output parameter
      */
-    void getRowColumn(Kmer kmer, int row, int column);
+    void getRowColumn(const Kmer &kmer, int &row, int &column);
 
     /**
      * @brief Returns the Kmer that is defined by the provided row and column 

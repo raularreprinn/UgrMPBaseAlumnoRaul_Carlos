@@ -1,0 +1,1 @@
+Test #19 [tests//09.2classify_missingParameters2.test] valgrind --leak-check=full  ./dist/CLASSIFY/GNU-Linux/CLASSIFY  ../Genomes/human1.dna

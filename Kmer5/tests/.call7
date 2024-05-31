@@ -1,0 +1,1 @@
+Test #7 [tests//03.2learn_unknownACGT2_k1.test] valgrind --leak-check=full  ./dist/LEARN/GNU-Linux/LEARN  -k 1 -o tests/output/unknownACGT_k1.prf ../Genomes/unknownACGT.dna
