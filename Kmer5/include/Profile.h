@@ -151,7 +151,7 @@ public:
      * @return The distance between this Profile object and the given 
      * argument @p otherProfile.
      */
-    double getDistance(Profile otherProfile);
+    double getDistance(const Profile &otherProfile)const;
     
     /**
      * @brief Searchs the given kmer in the list of kmers in this
@@ -166,7 +166,7 @@ public:
      * @return If found, it returns the position where the kmer 
      * was found. If not, it returns -1
      */
-    int findKmer(Kmer kmer, const int initialPos, const int finalPos);
+    int findKmer(Kmer kmer, const int initialPos, const int finalPos)const;
 
     /**
      * @brief Searchs the given kmer in the list of kmers in this
@@ -178,7 +178,7 @@ public:
      * @return If found, it returns the position where the kmer 
      * was found. If not, it returns -1
      */
-    int findKmer(Kmer kmer);
+    int findKmer(const Kmer &kmer)const;
 
     /**
      * @brief Obtains a string with the following content:
@@ -190,7 +190,7 @@ public:
      * @return A string with the number of kmers and the list of pairs of
      * kmer-frequency in the object
      */
-    std::string toString();
+    std::string toString()const;
 
     /**
      * @brief Sorts the vector of KmerFreq in decreasing order of frequency.

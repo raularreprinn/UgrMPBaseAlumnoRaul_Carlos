@@ -1,2 +1,6 @@
 %%%OUTPUT
-Segmentation fault (core dumped)
+Distance to ../Genomes/covidFullGenomeRNA.prf (severe acute respiratory syndrome coronavirus 2): 0.120813
+Distance to ../Genomes/ebolaFullGenomeRNA.prf (ebolavirus zaire): 0.199506
+Distance to ../Genomes/monkeypoxFullGenomeRNA.prf (monkey pox virus): 0.219065
+
+Final decision: severe acute respiratory syndrome coronavirus 2 with a distance of 0.120813

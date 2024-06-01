@@ -139,12 +139,14 @@ Kmer Kmer::complementary(const string& nucleotides, const string& complementaryN
 
 void Kmer::write(std::ostream & outputStream)
 {
-    outputStream << *this;
+    outputStream.write(reinterpret_cast<const char*>(&this->_text),sizeof(string));
 }
 
 void Kmer::read(std::istream &inputStream)
 {
-    inputStream >> *this;
+    size_t lenght= getK();
+    _text.resize(lenght);
+    inputStream.read(&_text[0], lenght);
 }
 
 const char & Kmer::operator[] (int index)const

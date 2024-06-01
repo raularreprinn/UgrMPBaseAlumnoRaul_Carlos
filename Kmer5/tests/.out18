@@ -1,8 +1,8 @@
-==37329== Memcheck, a memory error detector
-==37329== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==37329== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==37329== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/CLASSIFY/GNU-Linux/CLASSIFY
-==37329== 
+==8130== Memcheck, a memory error detector
+==8130== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8130== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8130== Command: /home/usuario/Documentos/UgrMPBaseAlumnoRaul_Carlos/Kmer5/./dist/CLASSIFY/GNU-Linux/CLASSIFY
+==8130== 
 ERROR in CLASSIFY parameters
 Run with the following parameters:
 CLASSIFY [-k kValue] [-n nucleotidesSet] <file.dna> <profile1.prf> [<profile2.prf> <profile3.prf> ....]
@@ -14,12 +14,12 @@ Parameters:
 
 This program obtains the identifier of the closest profile to the input DNA file
 
-==37329== 
-==37329== HEAP SUMMARY:
-==37329==     in use at exit: 0 bytes in 0 blocks
-==37329==   total heap usage: 1 allocs, 1 frees, 72,704 bytes allocated
-==37329== 
-==37329== All heap blocks were freed -- no leaks are possible
-==37329== 
-==37329== For lists of detected and suppressed errors, rerun with: -s
-==37329== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==8130== 
+==8130== HEAP SUMMARY:
+==8130==     in use at exit: 0 bytes in 0 blocks
+==8130==   total heap usage: 1 allocs, 1 frees, 72,704 bytes allocated
+==8130== 
+==8130== All heap blocks were freed -- no leaks are possible
+==8130== 
+==8130== For lists of detected and suppressed errors, rerun with: -s
+==8130== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

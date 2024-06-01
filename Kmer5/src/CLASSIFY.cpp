@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
             i++;
         }else if(aux=="-n")
         {
-            nucleotides=*argv[i+1];
+            nucleotides=argv[i+1];
             i++;
         }else if(aux.size()>3)
         {
@@ -165,7 +165,7 @@ int main(int argc, char *argv[]) {
     for(int i=0; i<argc-ini-1; i++)
     {
         distancias[i]=perfil.getDistance(perfiles[i]);
-        cout << "Distance to " << argv[ini+i+1] <<  ": " << distancias[i] << endl;
+        cout << "Distance to " << argv[ini+i+1] << " (" << perfiles[i].getProfileId() << "): " << distancias[i] << endl;
     }
     // Print the identifier and distance to the closest profile
     int posicion=0;
@@ -176,8 +176,8 @@ int main(int argc, char *argv[]) {
                 posicion=i;
             }
         }
-    cout <<  "Nearest profile file: " << argv[ini+posicion+1]<< endl;
-    cout << "Identifier of the nearest profile: " << perfiles[posicion].getProfileId()<<endl;
+    cout << endl;
+    cout <<"Final decision: " << perfiles[posicion].getProfileId() << " with a distance of " << distancias[posicion] << endl;
     
     delete []perfiles;
     delete []distancias;

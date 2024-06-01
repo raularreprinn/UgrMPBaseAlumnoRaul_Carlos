@@ -30,12 +30,12 @@ const int KmerFreq::getFrequency() const
     return this->_frequency;
 }
 
-void KmerFreq::setKmer(Kmer kmer)
+void KmerFreq::setKmer(const Kmer &kmer)
 {
     this->_kmer=kmer;
 }
 
-void KmerFreq::setFrequency(int frequency)
+void KmerFreq::setFrequency(const int frequency)
 {
     this->_frequency=frequency;
 }
@@ -51,12 +51,14 @@ string KmerFreq:: toString() const
 
 void KmerFreq::write(std::ostream &outputStream)
 {
-    outputStream << *this;
+    _kmer.write(outputStream);
+    outputStream.write(reinterpret_cast<const char*>(&this->_frequency),sizeof(int));
 }
 
 void KmerFreq::read(std::istream &inputStream)
 {
-    inputStream >> *this;
+    _kmer.read(inputStream);
+    inputStream.read(reinterpret_cast<char*>(&this->_frequency),sizeof(int));
 }
 
 ostream & operator<<(std::ostream &os, const KmerFreq &kmerFreq)

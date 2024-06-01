@@ -4,13 +4,10 @@
  */
 
 /** 
- * @file Kmer.h
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
- * 
- * Created on 17 November 2023, 10:15
+ * @file Kmer.cpp
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ * Created on 1 March 2024, 19:00
  */
 
 #ifndef KMER_H

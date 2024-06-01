@@ -29,7 +29,7 @@ KmerCounter::KmerCounter(int k, std::string validNucleotides)
 {
     _k=k;
     _validNucleotides=validNucleotides;
-    _allNucleotides=_validNucleotides + Kmer::MISSING_NUCLEOTIDE;
+    _allNucleotides=Kmer::MISSING_NUCLEOTIDE + _validNucleotides;
     _frequency= new int*[getNumRows()];
     for(int i=0; i<getNumRows(); i++)
     {
@@ -133,7 +133,7 @@ std::string KmerCounter::toString()const{
      int contador=0;
      for(int i=0; i<kmer.getK(); i++)
      {
-         for(int j=0; j<_allNucleotides.size(); j++)
+         for(int j=0; j<getNumNucleotides(); j++)
          {
              if(kmer[i]==_allNucleotides[j])
              {
@@ -148,9 +148,7 @@ std::string KmerCounter::toString()const{
      
      int fila, columna;
      getRowColumn(kmer, fila, columna);
-     
      _frequency[fila][columna]+=frequency;
-
  }
  
  KmerCounter & KmerCounter:: operator=(const KmerCounter &orig)
@@ -200,7 +198,7 @@ std::string KmerCounter::toString()const{
      if(is)
      {
          getline(is,cadena);
-         for(int i=0; i<cadena.size();i=i+getK())
+         for(int i=0; i+getK()-1<cadena.size();i++)
          {
              string aux;
              for(int j=i; j<i+getK(); j++)
@@ -266,7 +264,7 @@ void KmerCounter::getRowColumn(const Kmer &kmer, int &row, int &column)
     int contador=0;
      for(int i=0; i<kmer.getK(); i++)
      {
-         for(int j=0; j<_allNucleotides.size(); j++)
+         for(int j=0; j<getNumNucleotides(); j++)
          {
              if(kmer[i]==_allNucleotides[j])
              {
@@ -280,23 +278,16 @@ void KmerCounter::getRowColumn(const Kmer &kmer, int &row, int &column)
          column=-1;
      }else
      {
-         int m=getNumNucleotides();
-        int lfilas=(_k+1)/2;
-        int lcolumnas=_k-lfilas;
-        row=0;
-        column=0;
-        for(int i=0; i<lfilas; i++)
-        {
-            row+=pow(m,i)*kmer[lfilas-i-1];
-        }
-        for(int i=0; i<lcolumnas; i++)
-        {
-            column+=pow(m,i)*kmer[lcolumnas-i-1];
-        }
+        string cadena;
+        int aux=(_k+1)/2;
+        cadena=kmer.toString().substr(0,aux);
+        row=getIndex(cadena);
+        cadena=kmer.toString().substr(aux,_k-aux);
+        column=getIndex(cadena);         
      }
 }
 
-Kmer KmerCounter::getKmer(int row, int column)
+Kmer KmerCounter::getKmer(const int row, const int column)const
 {
     if(row<0 || row>getNumRows()||column<0||column>getNumCols())
     {
@@ -305,8 +296,7 @@ Kmer KmerCounter::getKmer(int row, int column)
     int lfilas=(_k+1)/2;
     int lcolumnas=_k-lfilas;
     string nucs;
-    nucs=getInvertedIndex(row,lfilas);
-    nucs.append(getInvertedIndex(column,lcolumnas));
+    nucs=getInvertedIndex(row,lfilas)+getInvertedIndex(column,lcolumnas);
     Kmer kmer(nucs);
     return kmer;
 }

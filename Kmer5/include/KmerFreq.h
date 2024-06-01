@@ -3,14 +3,12 @@
  * Curso 2023/2024
  */
 
-/* 
- * @file   KmerFreq.h
- * @author Silvia Acid Carrillo <acid@decsai.ugr.es>
- * @author Andrés Cano Utrera <acu@decsai.ugr.es>
- * @author Luis Castillo Vidal <L.Castillo@decsai.ugr.es>
- * @author Javier Martínez Baena <jbaena@ugr.es>
- *
- * Created on 17 November 2023, 10:15
+/** 
+ * @file KmerFreq.cpp
+ * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
+ * @author Carlos Romero García <cromgar939@correo.ugr.es>
+ * 
+ * Created on 25 de March de 2024, 14:18
  */
 
 
@@ -52,7 +50,7 @@ public:
      * Modifier method
      * @param kmer The new Kmer value for this object. Input parameter
      */
-    void setKmer(Kmer kmer);
+    void setKmer(const Kmer &kmer);
 
     /**
      * @brief Sets the frequency of this KmerFreq object
@@ -61,7 +59,7 @@ public:
      * @param frequency the new frequency value for this KmerFreq object. 
      * Input parameter
      */
-    void setFrequency(int frequency);
+    void setFrequency(const int frequency);
     
     /**
      * @brief Obtains a string with the string and frequency of the kmer

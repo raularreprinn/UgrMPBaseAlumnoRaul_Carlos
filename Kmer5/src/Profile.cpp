@@ -15,6 +15,7 @@
 using namespace std;
 
 const string Profile::MAGIC_STRING_T="MP-KMER-T-1.0";
+const string Profile::MAGIC_STRING_B="MP-KMER-B-1.0";
 
 Profile::Profile()
 {
@@ -105,7 +106,7 @@ const int Profile::getCapacity() const
     return _capacity;
 }
 
-double Profile::getDistance(Profile otherProfile)
+double Profile::getDistance(const Profile &otherProfile)const
 {
     int posicion;
     double suma=0.0;
@@ -125,7 +126,7 @@ double Profile::getDistance(Profile otherProfile)
     return distancia;
 }
 
-int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)
+int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)const
 {
     int posicion=-1;
     for(int i=initialPos; i<finalPos; i++)
@@ -136,7 +137,7 @@ int Profile::findKmer(Kmer kmer, const int initialPos, const int finalPos)
     return posicion;
 }
 
-int Profile::findKmer(Kmer kmer)
+int Profile::findKmer(const Kmer &kmer)const
 {
     int posicion=-1;
     for(int i=0; i<this->_size; i++)
@@ -147,7 +148,7 @@ int Profile::findKmer(Kmer kmer)
     return posicion;
 }
 
-string Profile::toString()
+string Profile::toString() const
 {
     string aux;
     aux = this->_profileId+"\n"+to_string(this->_size)+"\n";
@@ -176,24 +177,41 @@ void Profile::sort()
 
 void Profile::save(const char fileName[], const char mode)
 {
-    ofstream outstream(fileName,ios::out);
-    if(outstream)
+    if(mode=='t')
     {
-        outstream<<*this;
-        outstream.close();
+        ofstream outstream(fileName,ios::out);
+        if(outstream)
+        {
+            outstream<<*this;
+            outstream.close();
+        }else
+        {
+            throw std::ios_base::failure("No se pudo abrir");
+        }
     }else
     {
-        throw std::ios_base::failure("No se pudo abrir");
+        ofstream outstream(fileName, ios::out|ios::binary);
+        if(outstream)
+        {
+            outstream.write(reinterpret_cast<const char*>(&this->_profileId),sizeof(string));
+            outstream.write(reinterpret_cast<const char*>(&this->_size),sizeof(int));
+            for(int i=0; i<_size; i++)
+            {
+                _vectorKmerFreq[i].write(outstream);
+            }
+            outstream.close();
+        }else
+        {
+            throw std::ios_base::failure("No se pudo abrir");
+        }
     }
+    
 }
 
 void Profile::load(const char fileName[])
 {
     const char *archivo=fileName;
     string num_mag;
-    string nkmers;
-    string kmer;
-    string freq;
     ifstream InputStream;
     
     InputStream.open(archivo,ifstream::in);
@@ -205,9 +223,38 @@ void Profile::load(const char fileName[])
         {
             getline(InputStream,this->_profileId);
             InputStream >> *this;
+        }else if(num_mag==MAGIC_STRING_B)
+        {
+            getline(InputStream,this->_profileId);
+            string nkmers;
+            getline(InputStream, nkmers);
+            if(stoi(nkmers)>0)
+            {
+                InputStream.close();
+                InputStream.open(archivo, ios::in|ios::binary);
+                for(int i=0; i<4; i++)
+                {
+                    InputStream.get();
+                }
+                for(int i=0; i<stoi(nkmers);i++)
+                {
+                    if(_size==_capacity)
+                    {
+                        cout << "Llamar reallocate" << endl;
+                        reallocate();
+                    }
+                    _vectorKmerFreq[i].read(InputStream);
+                    cout << _vectorKmerFreq[i] << endl;
+                    _size++;
+                }
+                cout << "Después del for" << endl;
+            }else
+            {
+                throw std::out_of_range("Número de kmeros inválido");
+            }
         }else
         {
-            throw std::invalid_argument("Números mágicos diferentes");
+            throw std::invalid_argument("Números mágicos diferentes");           
         }
         InputStream.close();
     }else
@@ -377,10 +424,7 @@ void Profile::copy(const Profile &p)
 
 ostream & operator<<(std::ostream &os, const Profile &profile)
 {
-    for(int i=0; i<profile.getSize(); i++)
-    {
-        os<<profile[i]<<endl;
-    }
+    os<< profile.toString();
     return os;
 }
 
@@ -393,10 +437,14 @@ istream & operator>>(std::istream &is, Profile &profile)
                 for(int i=0; i<stoi(nkmers);i++)
                 {
                     string freq;
-                    Kmer kmer;
-                    is >> kmer >> freq;
+                    string kmer;
+                    is >> kmer;
+                    is >> freq;
+                    is.get();
+                    //Kmer kmeraux(kmer);
                     KmerFreq aux;
                     aux.setKmer(kmer);
+                    aux.setFrequency(stoi(freq));
                     profile.append(aux);
                 }
             }else

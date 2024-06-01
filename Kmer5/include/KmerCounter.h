@@ -4,7 +4,7 @@
  */
 
 /* 
- * @file:   KmerCounter.h
+ * @file:  KmerCounter.h
  * @author Carlos Romero García <cromgar939@correo.ugr.es>
  * @author Raúl Antonio Arredondo Principal <raularreprin@correo.ugr.es>
  *
@@ -290,7 +290,7 @@ private:
      * of the correct bounds
      * @return the Kmer that is defined by the provided row and column 
      */
-    Kmer getKmer(int row, int column);
+    Kmer getKmer(const int row, const int column)const;
     
     /**
      * @brief Sets the frequency of each kmer to 0, that is, it fills with 0 the 

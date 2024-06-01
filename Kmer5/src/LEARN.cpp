@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
         {
             ArchivoSalida=argv[i+1];
             i++;
-        }else if(aux.substr(aux.find_last_of(".")+1)=="dna")
+        }else if(aux.substr(aux.find_last_of(".")+1)=="dna"||aux.substr(aux.find_last_of(".")+1)=="rna")
         {
             ini=i;
         }else
